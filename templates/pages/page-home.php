@@ -1,14 +1,9 @@
 <?php
-global $url;
+$requestedRoute = isset($_GET['url']) ? trim($_GET['url'], '/') : '';
+$sectionRoutes = ['dashboard', 'events', 'users', 'courses', 'profile', 'settings'];
+
+$currentRoute = in_array($requestedRoute, $sectionRoutes, true) ? $requestedRoute : 'dashboard';
 ?>
-
-<!DOCTYPE html>
-
-<html lang="de">
-
-<!-- Head einbinden -->
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/templates/sections/section-head.php'; ?>
-
 
 <style>
     body {
@@ -39,17 +34,25 @@ global $url;
     }
 </style>
 
-<body>
+<!DOCTYPE html>
 
-    <?php include $_SERVER['DOCUMENT_ROOT'] . '/templates/sections/section-sidebar.php'; ?>
+<html lang="de">
+
+<!-- Head einbinden -->
+<?php include_once SECTIONS_PATH . '/section-head.php'; ?>
+
+<body>
+    <h1 class="container"><?php echo $currentRoute; ?></h1>
+
+    <?php include SECTIONS_PATH . '/section-sidebar.php'; ?>
 
     <div class="main-content" id="mainContent">
 
-        <?php include $_SERVER['DOCUMENT_ROOT'] . '/templates/sections/section-topbar.php'; ?>
+        <?php include SECTIONS_PATH . '/section-topbar.php'; ?>
 
         <div class="content">
 
-            <?php include $_SERVER['DOCUMENT_ROOT'] . "/templates/sections/section-" . $url . ".php"; ?>
+            <?php include SECTIONS_PATH . '/section-' . $currentRoute . '.php'; ?>
 
         </div>
 
@@ -60,7 +63,7 @@ global $url;
 
         const content = document.getElementById("mainContent");
 
-        document.getElementById("toggleSidebar").onclick = function() {
+        document.getElementById("toggleSidebar").onclick = function () {
 
             sidebar.classList.toggle("collapsed");
 
@@ -70,9 +73,9 @@ global $url;
     </script>
 
 </body>
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/templates/scripts/script-profile.php'; ?>
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/templates/scripts/script-event.php'; ?>
-<?php include_once $_SERVER['DOCUMENT_ROOT'] . '/templates/scripts/script-user.php'; ?>
+<?php include_once SCRIPT_PATH . '/script-profile.php'; ?>
+<?php include_once SCRIPT_PATH . '/script-event.php'; ?>
+<?php include_once SCRIPT_PATH . '/script-user.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 

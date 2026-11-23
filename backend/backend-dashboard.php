@@ -1,6 +1,6 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/backend-functions/dashboard.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/function-db.php';
+require_once BACKEND_PATH . '/backend-functions/dashboard.php';
+require_once FUNCTIONS_PATH . '/function-db.php';
 
 $pdo = getDB();
 $userId = $_SESSION['userId'];

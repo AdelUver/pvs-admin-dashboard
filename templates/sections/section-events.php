@@ -67,17 +67,15 @@
 </style>
 
 <?php
-global $url;
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/backend-functions/events.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/function-db.php';
+require_once BACKEND_PATH . '/backend-functions/events.php';
+require_once FUNCTIONS_PATH . '/function-db.php';
 
 
 //Daten
 $pdo = getDB();
 $userId = $_SESSION['userId'];
 $events = getAllEvents($pdo);
-
 
 ?>
 
@@ -370,9 +368,9 @@ $events = getAllEvents($pdo);
 
 </div>
 
-<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/sections/modals/modal-event_form.php'; ?>
+<?php require_once MODALS_PATH . '/modal-event_form.php'; ?>
 
-<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/sections/modals/modal-event_show.php'; ?>
+<?php require_once MODALS_PATH . '/modal-event_show.php'; ?>
 
-<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/sections/modals/modal-register_show.php'; ?>
+<?php require_once MODALS_PATH . '/modal-register_show.php'; ?>
 

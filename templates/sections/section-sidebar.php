@@ -112,7 +112,7 @@ global $url;
 
         <li class="<?= $url == "dashboard" ? "active" : "" ?>">
 
-            <a href="<?= $baseurl ?>/dashboard">
+            <a href="<?= BASE_URL ?>/dashboard">
 
                 <i class="bi bi-speedometer2"></i>
 
@@ -124,7 +124,7 @@ global $url;
 
         <li class="<?= $url == "events" ? "active" : "" ?>">
 
-            <a href="<?= $baseurl ?>/events">
+            <a href="<?= BASE_URL ?>/events">
 
                 <i class="bi bi-calendar-event"></i>
 
@@ -136,7 +136,7 @@ global $url;
 
         <li class="<?= $url == "users" ? "active" : "" ?>">
 
-            <a href="<?= $baseurl ?>/users">
+            <a href="<?= BASE_URL ?>/users">
 
                 <i class="bi bi-people"></i>
 
@@ -148,7 +148,7 @@ global $url;
 
         <li class="<?= $url == "courses" ? "active" : "" ?>">
 
-            <a href="<?= $baseurl ?>/courses">
+            <a href="<?= BASE_URL ?>/courses">
 
                 <i class="bi bi-journal-bookmark"></i>
 
@@ -160,7 +160,7 @@ global $url;
 
         <li class="<?= $url == "profile" ? "active" : "" ?>">
 
-            <a href="<?= $baseurl ?>/profile">
+            <a href="<?= BASE_URL ?>/profile">
 
                 <i class="bi bi-person-circle"></i>
 
@@ -172,7 +172,7 @@ global $url;
 
         <li class="<?= $url == "settings" ? "active" : "" ?>">
 
-            <a href="<?= $baseurl ?>/settings">
+            <a href="<?= BASE_URL ?>/settings">
 
                 <i class="bi bi-gear"></i>
 
@@ -189,7 +189,7 @@ global $url;
 
         <li class="<?= $url == "logout" ? "active" : "" ?>">
 
-            <a href="<?= $baseurl ?>/logout" onclick="return confirm('Möchten Sie sich wirklich abmelden?');">
+            <a href="<?= BASE_URL ?>/logout" onclick="return confirm('Möchten Sie sich wirklich abmelden?');">
 
 
                 <i class="bi bi-box-arrow-right"></i>

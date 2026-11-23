@@ -1,7 +1,6 @@
 <?php
-global $url;
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/backend-dashboard.php';
+require_once BACKEND_PATH . '/backend-dashboard.php';
 
 ?>
 
@@ -93,32 +92,32 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/backend-dashboard.php';
 
 
 <!-- Show Events info -->
-<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/sections/dashboard-modals/modal-show-eventsinfo.php'; ?>
+<?php require_once DASHBOARD_MODALS_PATH . '/modal-show-eventsinfo.php'; ?>
 
 
 <hr>
 
 <!-- Show Admins info -->
-<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/sections/dashboard-modals/modal-show-adminsinfo.php'; ?>
+<?php require_once DASHBOARD_MODALS_PATH . '/modal-show-adminsinfo.php'; ?>
 
 
 <hr>
 
 
 <!-- Nächtes Event -->
-<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/sections/dashboard-modals/modal-show-upcommingsevents.php'; ?>
+<?php require_once DASHBOARD_MODALS_PATH . '/modal-show-upcommingsevents.php'; ?>
 
 <hr>
 
 <!-- Mitgelieder Info -->
-<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/sections/dashboard-modals/modal-show-membersinfo.php'; ?>
+<?php require_once DASHBOARD_MODALS_PATH . '/modal-show-membersinfo.php'; ?>
 
 <hr>
 
 <!-- Zahlungs Info -->
-<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/sections/dashboard-modals/modal-show-paymentsinfo.php'; ?>
+<?php require_once DASHBOARD_MODALS_PATH . '/modal-show-paymentsinfo.php'; ?>
 
 <hr>
 
 <!-- Zahlungs Info -->
-<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/sections/dashboard-modals/modal-show-leadsinfo.php'; ?>
+<?php require_once DASHBOARD_MODALS_PATH . '/modal-show-leadsinfo.php'; ?>

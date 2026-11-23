@@ -67,10 +67,9 @@
 </style>
 
 <?php
-global $url;
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/backend-functions/users.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/function-db.php';
+require_once BACKEND_PATH . '/backend-functions/users.php';
+require_once FUNCTIONS_PATH . '/function-db.php';
 
 
 //Daten
@@ -336,6 +335,6 @@ $users = getAllUsers($pdo);
 
 </div>
 
-<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/sections/modals/modal-user_form.php'; ?>
+<?php require_once MODALS_PATH . '/modal-user_form.php'; ?>
 
-<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/templates/sections/modals/modal-user_show.php'; ?>
+<?php require_once MODALS_PATH . '/modal-user_show.php'; ?>

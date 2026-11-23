@@ -1,8 +1,7 @@
 <?php
-global $url;
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/backend-functions/profile.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/functions/function-db.php';
+require_once BACKEND_PATH . '/backend-functions/profile.php';
+require_once FUNCTIONS_PATH . '/function-db.php';
 
 
 //Daten

@@ -39,6 +39,7 @@ define('JS_PATH', ASSETS_PATH . '/js');
 define('IMAGES_PATH', ASSETS_PATH . '/images');
 define('ICONS_PATH', ASSETS_PATH . '/icons');
 define('TEMPLATES_PATH', PROJECT_ROOT . '/templates');
+define('SCRIPT_PATH', TEMPLATES_PATH . '/scripts');
 define('PAGES_PATH', TEMPLATES_PATH . '/pages');
 define('SECTIONS_PATH', TEMPLATES_PATH . '/sections');
 define('DASHBOARD_MODALS_PATH', SECTIONS_PATH . '/dashboard-modals');

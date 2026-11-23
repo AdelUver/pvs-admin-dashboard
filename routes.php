@@ -17,8 +17,16 @@ function routeRequest(mixed $url)
     // Routen-Tabelle
     $routes = [
         '' => 'page-home.php',
+        'dashboard' => 'page-home.php',
+        'events' => 'page-home.php',
+        'users' => 'page-home.php',
+        'courses' => 'page-home.php',
+        'profile' => 'page-home.php',
+        'settings' => 'page-home.php',
+        'home' => 'page-home.php',
         'login' => 'page-login.php',
-        'logout' => 'page-logout.php'
+        'logout' => 'page-logout.php',
+        '404' => 'page-404.php'
     ];
 
     /* Default */
