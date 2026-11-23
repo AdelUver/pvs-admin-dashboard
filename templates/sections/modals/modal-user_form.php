@@ -42,8 +42,8 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Passwort</label>
-                            <input type="password" class="form-control" id="password" name="password">
-                            <small class="text-muted">
+                            <input type="password" class="form-control" id="password" name="password" minlength="3" autocomplete="new-password">
+                            <small class="text-muted" id="userPasswordHelp">
                                 Leer lassen, wenn das Passwort nicht geändert werden soll.
                             </small>
                         </div>
@@ -85,7 +85,7 @@
                         Abbrechen
                     </button>
 
-                    <button class="btn btn-success" id="saveUser">
+                    <button class="btn btn-success" id="saveUser" type="submit">
                         <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
                         Speichern
                     </button>

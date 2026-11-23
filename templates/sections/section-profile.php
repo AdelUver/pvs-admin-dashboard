@@ -1,13 +1,29 @@
 <?php
 
-require_once BACKEND_PATH . '/backend-functions/profile.php';
+require_once FUNCTIONS_PATH . '/profile.php';
 require_once FUNCTIONS_PATH . '/function-db.php';
 
 
 //Daten
 $pdo = getDB();
-$userId = $_SESSION['userId'];
+$userId = (int) $_SESSION['userId'];
 $profile = getProfile($pdo, $userId);
+if ($profile === false) {
+    http_response_code(404);
+    echo '<p>Profildaten konnten nicht gefunden werden.</p>';
+    return;
+}
+
+$roleLabels = [
+    'super_admin' => 'Superadmin',
+    'admin' => 'Admin',
+    'editor' => 'Editor',
+    'user' => 'User'
+];
+$lastLogin = $profile['last_login_at'] ?? null;
+if (!is_string($lastLogin) || $lastLogin === '' || strncmp($lastLogin, '0000-00-00', 10) === 0) {
+    $lastLogin = '-';
+}
 
 ?>
 
@@ -85,7 +101,7 @@ $profile = getProfile($pdo, $userId);
 
                         </label>
 
-                        <input class="form-control" name="first_name"
+                        <input class="form-control" name="first_name" required
                             value="<?= htmlspecialchars($profile["first_name"]) ?>">
 
                     </div>
@@ -98,7 +114,7 @@ $profile = getProfile($pdo, $userId);
 
                         </label>
 
-                        <input class="form-control" name="last_name"
+                        <input class="form-control" name="last_name" required
                             value="<?= htmlspecialchars($profile["last_name"]) ?>">
 
                     </div>
@@ -111,14 +127,14 @@ $profile = getProfile($pdo, $userId);
 
                         </label>
 
-                        <input class="form-control" name="username"
+                        <input class="form-control" name="username" required
                             value="<?= htmlspecialchars($profile["username"]) ?>">
 
                     </div>
 
                 </div>
 
-                <button class="btn btn-primary" name="saveProfile" onclick="return confirm('Möchten Sie wirklich Ihre Daten ändern?');">
+                <button class="btn btn-primary" name="saveProfile" type="submit">
 
                     <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
 
@@ -152,14 +168,14 @@ $profile = getProfile($pdo, $userId);
 
                     <div class="col-lg-8">
 
-                        <input type="email" class="form-control" name="email"
+                        <input type="email" class="form-control" name="email" required
                             value="<?= htmlspecialchars($profile["email"]) ?>">
 
                     </div>
 
                     <div class="col-lg-4">
 
-                        <button class="btn btn-success w-100" onclick="return confirm('Möchten Sie Ihre E-Mail ändern?');">
+                        <button class="btn btn-success w-100" type="submit">
 
                             <i class="fa-solid fa-envelope" aria-hidden="true"></i>
 
@@ -203,7 +219,7 @@ $profile = getProfile($pdo, $userId);
 
                         </label>
 
-                        <input type="password" name="current_password" class="form-control">
+                        <input type="password" name="current_password" class="form-control" autocomplete="current-password" required>
 
                     </div>
 
@@ -215,7 +231,7 @@ $profile = getProfile($pdo, $userId);
 
                         </label>
 
-                        <input type="password" name="new_password" class="form-control">
+                        <input type="password" name="new_password" class="form-control" autocomplete="new-password" minlength="3" required>
 
                     </div>
 
@@ -227,13 +243,13 @@ $profile = getProfile($pdo, $userId);
 
                         </label>
 
-                        <input type="password" name="repeat_password" class="form-control">
+                        <input type="password" name="repeat_password" class="form-control" autocomplete="new-password" minlength="3" required>
 
                     </div>
 
                 </div>
 
-                <button class="btn btn-warning mt-3" onclick="return confirm('Möchten Sie Ihre Password ändern?');">
+                <button class="btn btn-warning mt-3" type="submit">
 
                     <i class="fa-solid fa-key" aria-hidden="true"></i>
 
@@ -273,7 +289,7 @@ $profile = getProfile($pdo, $userId);
 
                         <span class="badge bg-primary badge-role">
 
-                            <?= $profile["role"] ?>
+                            <?= htmlspecialchars($roleLabels[$profile["role"]] ?? $profile["role"]) ?>
 
                         </span>
 
@@ -323,7 +339,7 @@ $profile = getProfile($pdo, $userId);
 
                     <td>
 
-                        <?= $profile["created_at"] ?>
+                        <?= htmlspecialchars($profile["created_at"]) ?>
 
                     </td>
 
@@ -339,7 +355,7 @@ $profile = getProfile($pdo, $userId);
 
                     <td>
 
-                        <?= $profile["last_login_at"] ?>
+                        <?= htmlspecialchars($lastLogin) ?>
 
                     </td>
 
@@ -352,4 +368,56 @@ $profile = getProfile($pdo, $userId);
     </div>
 
 </div>
-<?php include_once SCRIPT_PATH . '/script-profile.php'; ?>
+
+
+<script>
+    const profileEndpoint = <?= json_encode(BACKEND_URL . '/backend-profile.php', JSON_UNESCAPED_SLASHES) ?>;
+    const loginUrl = <?= json_encode(BASE_URL . '/login', JSON_UNESCAPED_SLASHES) ?>;
+
+    $(document).ready(function () {
+        function submitProfileForm(form, confirmation) {
+            if (!window.confirm(confirmation)) {
+                return;
+            }
+            $.ajax({
+                url: profileEndpoint,
+                method: "POST",
+                data: new FormData(form),
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    handleProfileResponse(response);
+                },
+                error: function (xhr) {
+                    handleProfileResponse(xhr.responseText || "Unerwarteter Fehler.");
+                }
+            });
+        }
+
+        function handleProfileResponse(response) {
+            const result = response.trim();
+            if (result === "success") {
+                window.location.reload();
+            } else if (result === "session") {
+                window.location.assign(loginUrl);
+            } else {
+                alert(result || "Unerwarteter Fehler.");
+            }
+        }
+
+        $("#personalDataForm").on("submit", function (e) {
+            e.preventDefault();
+            submitProfileForm(this, "Möchten Sie wirklich Ihre Daten ändern?");
+        });
+
+        $("#emailChangeForm").on("submit", function (e) {
+            e.preventDefault();
+            submitProfileForm(this, "Möchten Sie Ihre E-Mail ändern?");
+        });
+
+        $("#passwordChangeForm").on("submit", function (e) {
+            e.preventDefault();
+            submitProfileForm(this, "Möchten Sie Ihr Passwort ändern?");
+        });
+    });
+</script>

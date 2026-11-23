@@ -15,17 +15,20 @@
                                         <div class="login-card text-center">
                                             <h4 class="mb-4 pb-3">Log In</h4>
                                             <div class="form-group">
-                                                <input type="email" id="email" name="email" class="form-style" placeholder="Email">
+                                                <input type="email" id="email" name="email" class="form-style" required
+                                                    placeholder="Email">
                                                 <i class="input-icon uil uil-at"></i>
                                             </div>
                                             <div class="form-group mt-2">
-                                                <input type="password" id="password" name="password" class="form-style" placeholder="Password">
+                                                <input type="password" id="password" name="password" class="form-style" required
+                                                    placeholder="Password">
                                                 <i class="input-icon uil uil-lock-alt"></i>
                                             </div>
                                             <button type="submit" class="btn mt-4">
                                                 Anmelden
                                             </button>
-                                            <p class="mb-0 mt-4 text-center"><a href="#" class="link">Forgot your password?</a></p>
+                                            <p class="mb-0 mt-4 text-center"><a href="#" class="link">Forgot your
+                                                    password?</a></p>
                                         </div>
                                     </div>
                                 </div>
@@ -38,7 +41,8 @@
                                                 <i class="input-icon uil uil-user"></i>
                                             </div>
                                             <div class="form-group mt-2">
-                                                <input type="tel" class="form-style" placeholder="Phone Number" disabled>
+                                                <input type="tel" class="form-style" placeholder="Phone Number"
+                                                    disabled>
                                                 <i class="input-icon uil uil-phone"></i>
                                             </div>
                                             <div class="form-group mt-2">
@@ -46,7 +50,8 @@
                                                 <i class="input-icon uil uil-at"></i>
                                             </div>
                                             <div class="form-group mt-2">
-                                                <input type="password" class="form-style" placeholder="Password" disabled>
+                                                <input type="password" class="form-style" placeholder="Password"
+                                                    disabled>
                                                 <i class="input-icon uil uil-lock-alt"></i>
                                             </div>
                                             <button type="submit" href="#" class="btn mt-4" disabled>Register</button>
@@ -178,10 +183,11 @@
         width: 100%;
         height: 100%;
         background-color: #2b2e38;
-        background-image: url('/img/pattern_japanese-pattern-2_1_2_0-0_0_1__ffffff00_000000.png');
         position: absolute;
         border-radius: 6px;
         -webkit-transform-style: preserve-3d;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
     }
 
     .card-back {
@@ -272,3 +278,64 @@
         box-shadow: 0 8px 24px 0 rgba(16, 39, 112, .2);
     }
 </style>
+
+<script>
+    const loginEndpoint = <?= json_encode(BACKEND_URL . '/backend-login.php', JSON_UNESCAPED_SLASHES) ?>;
+    const dashboardUrl = <?= json_encode(BASE_URL . '/dashboard', JSON_UNESCAPED_SLASHES) ?>;
+
+    $(document).ready(function () {
+        $("#loginForm").on("submit", function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: loginEndpoint,
+                method: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.trim() === "success") {
+                        window.location.assign(dashboardUrl);
+                    } else {
+                        alert(response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    alert("Unerwarteter Fehler.");
+                }
+            });
+        });
+    });
+
+
+    const password = document.getElementById("password");
+    const toggle = document.getElementById("togglePassword");
+
+
+    if (password && toggle) {
+        toggle.addEventListener("click", () => {
+
+            password.type =
+                password.type === "password" ?
+                    "text" :
+                    "password";
+
+            toggle.innerHTML =
+                password.type === "password" ?
+                    "👁" :
+                    "🙈";
+        });
+    }
+
+    // Platzhalter für spätere Backend-Fehler
+    function showLoginError(message) {
+
+        const alert = document.getElementById("loginAlert");
+
+        alert.textContent = message;
+        alert.classList.remove("d-none");
+    }
+</script>

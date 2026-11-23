@@ -1,19 +1,53 @@
 <?php
 
+declare(strict_types=1);
+
 //data validieren
 function validateUserData(array $data): array
 {
     return [
-
-        'username'   => trim($data['username'] ?? ''),
-        'email'      => trim($data['email'] ?? ''),
-        'password'   => $data['password'] ?? '',
-        'first_name' => trim($data['first_name'] ?? ''),
-        'last_name'  => trim($data['last_name'] ?? ''),
-        'role'       => $data['role'] ?? 'user',
-        'is_active'  => isset($data['is_active']) ? (int)$data['is_active'] : 1
-
+        'username'   => is_string($data['username'] ?? null) ? trim($data['username']) : '',
+        'email'      => is_string($data['email'] ?? null) ? trim($data['email']) : '',
+        'password'   => is_string($data['password'] ?? null) ? $data['password'] : '',
+        'first_name' => is_string($data['first_name'] ?? null) ? trim($data['first_name']) : '',
+        'last_name'  => is_string($data['last_name'] ?? null) ? trim($data['last_name']) : '',
+        'role'       => is_string($data['role'] ?? null) ? $data['role'] : '',
+        'is_active'  => filter_var($data['is_active'] ?? null, FILTER_VALIDATE_INT)
     ];
+}
+
+function userUsernameExists(PDO $pdo, string $username, int $exceptUserId = 0): bool
+{
+    $stmt = $pdo->prepare("
+        SELECT user_id
+        FROM admin_users
+        WHERE username = :username
+          AND user_id != :user_id
+        LIMIT 1
+    ");
+    $stmt->execute([
+        ':username' => trim($username),
+        ':user_id' => $exceptUserId
+    ]);
+
+    return (bool)$stmt->fetchColumn();
+}
+
+function userEmailExists(PDO $pdo, string $email, int $exceptUserId = 0): bool
+{
+    $stmt = $pdo->prepare("
+        SELECT user_id
+        FROM admin_users
+        WHERE email = :email
+          AND user_id != :user_id
+        LIMIT 1
+    ");
+    $stmt->execute([
+        ':email' => trim($email),
+        ':user_id' => $exceptUserId
+    ]);
+
+    return (bool)$stmt->fetchColumn();
 }
 
 //alle user lesen
@@ -75,9 +109,11 @@ function createUser(PDO $pdo, int $createdBy, array $data): int
             email,
             first_name,
             last_name,
+            password_hash,
             role,
             is_active,
-            created_by
+            created_by,
+            updated_by
         )
         VALUES
         (
@@ -85,9 +121,11 @@ function createUser(PDO $pdo, int $createdBy, array $data): int
             :email,
             :first_name,
             :last_name,
+            :password_hash,
             :role,
             :is_active,
-            :created_by
+            :created_by,
+            :updated_by
         )
     ");
 
@@ -97,9 +135,11 @@ function createUser(PDO $pdo, int $createdBy, array $data): int
         ':email'      => $data['email'],
         ':first_name' => $data['first_name'],
         ':last_name'  => $data['last_name'],
+        ':password_hash' => password_hash($data['password'], PASSWORD_DEFAULT),
         ':role'       => $data['role'],
         ':is_active'  => $data['is_active'],
-        ':created_by' => $createdBy
+        ':created_by' => $createdBy,
+        ':updated_by' => $createdBy
 
     ]);
 
@@ -110,34 +150,32 @@ function createUser(PDO $pdo, int $createdBy, array $data): int
 function updateUser(PDO $pdo, int $userId, int $updatedBy, array $data): bool
 {
     if (!empty($data['password'])) {
-
         $sql = "
             UPDATE admin_users
             SET
                 username = :username,
                 email = :email,
-                password = :password,
+                password_hash = :password_hash,
                 first_name = :first_name,
                 last_name = :last_name,
                 role = :role,
                 is_active = :is_active,
-                updated_at = NOW()
+                updated_at = NOW(),
+                updated_by = :updated_by
             WHERE user_id = :id
         ";
 
         $stmt = $pdo->prepare($sql);
-
         return $stmt->execute([
-
             ':username'   => $data['username'],
             ':email'      => $data['email'],
-            ':password'   => password_hash($data['password'], PASSWORD_DEFAULT),
+            ':password_hash' => password_hash($data['password'], PASSWORD_DEFAULT),
             ':first_name' => $data['first_name'],
             ':last_name'  => $data['last_name'],
             ':role'       => $data['role'],
             ':is_active'  => $data['is_active'],
+            ':updated_by' => $updatedBy,
             ':id'         => $userId
-
         ]);
     }
 
@@ -150,22 +188,21 @@ function updateUser(PDO $pdo, int $userId, int $updatedBy, array $data): bool
             last_name = :last_name,
             role = :role,
             is_active = :is_active,
-            updated_at = NOW()
+            updated_at = NOW(),
+            updated_by = :updated_by
         WHERE user_id = :id
     ";
 
     $stmt = $pdo->prepare($sql);
-
     return $stmt->execute([
-
         ':username'   => $data['username'],
         ':email'      => $data['email'],
         ':first_name' => $data['first_name'],
         ':last_name'  => $data['last_name'],
         ':role'       => $data['role'],
         ':is_active'  => $data['is_active'],
+        ':updated_by' => $updatedBy,
         ':id'         => $userId
-
     ]);
 }
 
@@ -179,5 +216,5 @@ function deleteUser(PDO $pdo, int $userId): bool
 
     return $stmt->execute([
         ':id' => $userId
-    ]);
+    ]) && $stmt->rowCount() > 0;
 }

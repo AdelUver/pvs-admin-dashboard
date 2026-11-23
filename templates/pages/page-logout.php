@@ -1,6 +1,9 @@
 <?php
-global $baseurl;
-session_destroy();
-header('Location: ' . $baseurl . '/login');
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
 
-?>
+$_SESSION = [];
+session_destroy();
+header('Location: ' . BASE_URL . '/login');
+exit();

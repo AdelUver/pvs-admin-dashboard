@@ -2,44 +2,40 @@
 
 declare(strict_types=1);
 
-session_start();
+require_once dirname(__DIR__) . '/config/config.php';
 
-//Abhängigkeiten
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Uver/loginPVS/functions/function-db.php';
-require_once "backend-functions/profile.php";
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
 
-$pdo = getDb();
+header('Content-Type: text/plain; charset=utf-8');
 
 // Benutzer muss angemeldet sein
 if (!isset($_SESSION['userId'])) {
+    http_response_code(401);
     echo "session";
     exit();
 }
 
-
-//Initialisierung
 $userId = (int) $_SESSION['userId'];
 
-
-
-//Es dürfen nur POST-Anfragen verarbeitet werden.
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-
-    echo 'Server-Request Fehler';
+    http_response_code(405);
+    echo 'Ungültige Anfragemethode.';
     exit();
 }
 
-//Aktion bestimmen
+require_once FUNCTIONS_PATH . '/function-db.php';
+require_once FUNCTIONS_PATH . '/profile.php';
+
+$pdo = getDB();
 $action = $_POST["action"] ?? "";
 
 switch ($action) {
-
-    //Persönliche Daten aktualisieren
     case "updateProfile":
-
-        $username   = trim($_POST["username"] ?? "");
-        $firstName  = trim($_POST["first_name"] ?? "");
-        $lastName   = trim($_POST["last_name"] ?? "");
+        $username = is_string($_POST["username"] ?? null) ? trim($_POST["username"]) : "";
+        $firstName = is_string($_POST["first_name"] ?? null) ? trim($_POST["first_name"]) : "";
+        $lastName = is_string($_POST["last_name"] ?? null) ? trim($_POST["last_name"]) : "";
 
         if ($username === "") {
             echo "Bitte einen Benutzernamen eingeben.";
@@ -56,74 +52,45 @@ switch ($action) {
             exit();
         }
 
-        //Weitere valdidirungen für persönliche Daten hier    !!!!!!!!!!!!!!!!!!!!!!
-
-
-        if (
-            updateProfile(
-                $pdo,
-                $userId,
-                $username,
-                $firstName,
-                $lastName
-            )
-        ) {
-
-            echo "success";
-            exit();
-        } else {
-
-            echo "Profil konnte nicht gespeichert werden.";
+        if (profileUsernameExists($pdo, $username, $userId)) {
+            echo "Dieser Benutzername wird bereits verwendet.";
             exit();
         }
 
+        if (updateProfile($pdo, $userId, $username, $firstName, $lastName)) {
+            echo "success";
+        } else {
+            echo "Profil konnte nicht gespeichert werden.";
+        }
         break;
 
-    //E-Mail ändern
     case "changeEmail":
+        $email = is_string($_POST["email"] ?? null) ? trim($_POST["email"]) : "";
 
-        $email = trim($_POST["email"] ?? "");
-
-        //Email korrekt?
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
             echo "Ungültige E-Mail-Adresse.";
             exit();
         }
 
         if (emailExists($pdo, $email, $userId)) {
-
             echo "Diese E-Mail-Adresse wird bereits verwendet.";
             exit();
         }
 
-        //Weitere valdidirungen für Email hier    !!!!!!!!!!!!!!!!!!!!!!
-
         if (updateEmail($pdo, $userId, $email)) {
-
-            echo "E-Mail erfolgreich geändert.";
-            exit();
+            $_SESSION['email'] = $email;
+            echo "success";
         } else {
-
             echo "E-Mail konnte nicht geändert werden.";
-            exit();
         }
-
         break;
 
-    //Passwort ändern
     case "changePassword":
+        $currentPassword = is_string($_POST["current_password"] ?? null) ? $_POST["current_password"] : "";
+        $newPassword = is_string($_POST["new_password"] ?? null) ? $_POST["new_password"] : "";
+        $repeatPassword = is_string($_POST["repeat_password"] ?? null) ? $_POST["repeat_password"] : "";
 
-        $currentPassword = $_POST["current_password"] ?? "";
-        $newPassword     = $_POST["new_password"] ?? "";
-        $repeatPassword  = $_POST["repeat_password"] ?? "";
-
-        if (!verifyCurrentPassword(
-            $pdo,
-            $userId,
-            $currentPassword
-        )) {
-
+        if (!verifyCurrentPassword($pdo, $userId, $currentPassword)) {
             echo "Das aktuelle Passwort ist falsch.";
             exit();
         }
@@ -134,42 +101,21 @@ switch ($action) {
         }
 
         if ($newPassword !== $repeatPassword) {
-
             echo "Die Passwörter stimmen nicht überein.";
             exit();
         }
 
-        //Weitere valdidirungen für Password hier    !!!!!!!!!!!!!!!!!!!!!!
+        $passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
 
-
-        $passwordHash = password_hash(
-            $newPassword,
-            PASSWORD_DEFAULT
-        );
-
-        if (
-            updatePassword(
-                $pdo,
-                $userId,
-                $passwordHash
-            )
-        ) {
-
-            echo "Passwort erfolgreich geändert.";
-            exit();
+        if (updatePassword($pdo, $userId, $passwordHash)) {
+            echo "success";
         } else {
-
             echo "Passwort konnte nicht geändert werden.";
-            exit();
         }
-
         break;
 
-    //Unbekannte Aktion
     default:
-
+        http_response_code(400);
         echo "Ungültige Anfrage.";
-        exit();
-
         break;
 }

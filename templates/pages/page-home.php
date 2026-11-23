@@ -1,4 +1,13 @@
 <?php
+if (session_status() !== PHP_SESSION_ACTIVE) {
+    session_start();
+}
+
+if (!isset($_SESSION['userId'])) {
+    header('Location: ' . BASE_URL . '/login');
+    exit();
+}
+
 $requestedRoute = isset($_GET['url']) ? trim($_GET['url'], '/') : '';
 $sectionRoutes = ['dashboard', 'events', 'users', 'courses', 'profile', 'settings'];
 

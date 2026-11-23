@@ -49,7 +49,9 @@ function updateProfile(
         SET
             username = :username,
             first_name = :firstName,
-            last_name = :lastName
+            last_name = :lastName,
+            updated_at = NOW(),
+            updated_by = :userId
         WHERE user_id = :userId
     ";
 
@@ -74,7 +76,10 @@ function updateEmail(
 
     $sql = "
         UPDATE admin_users
-        SET email = :email
+        SET
+            email = :email,
+            updated_at = NOW(),
+            updated_by = :userId
         WHERE user_id = :userId
     ";
 
@@ -113,6 +118,26 @@ function emailExists(
     return (bool)$stmt->fetch();
 }
 
+function profileUsernameExists(
+    PDO $pdo,
+    string $username,
+    int $userId
+): bool {
+    $stmt = $pdo->prepare("
+        SELECT user_id
+        FROM admin_users
+        WHERE username = :username
+        AND user_id != :userId
+        LIMIT 1
+    ");
+
+    $stmt->execute([
+        ':username' => trim($username),
+        ':userId' => $userId
+    ]);
+
+    return (bool)$stmt->fetch();
+}
 
 
 //Prüft das aktuelle Passwort.
@@ -155,7 +180,10 @@ function updatePassword(
 
     $sql = "
         UPDATE admin_users
-        SET password_hash = :passwordHash
+        SET
+            password_hash = :passwordHash,
+            updated_at = NOW(),
+            updated_by = :userId
         WHERE user_id = :userId
     ";
 

@@ -138,3 +138,30 @@ $upcomingEvents = getUpcomingEvents($pdo);
 
 <!-- Zahlungs Info -->
 <?php require_once DASHBOARD_MODALS_PATH . '/modal-show-leadsinfo.php'; ?>
+
+
+<script>
+    $(document).ready(function () {
+        $("#showAllEvents").on("click", function () {
+
+            $.ajax({
+
+                url: "/Uver/pvs-admin-dashboard/backend/backend-dashboard.php",
+
+                method: "POST",
+
+                data: {
+                    loadAllEvents: 1
+                },
+
+                success: function (response) {
+
+                    $("#upcomingEventsBody").html(response);
+
+                }
+
+            });
+
+        });
+    });
+</script>
