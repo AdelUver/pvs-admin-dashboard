@@ -11,8 +11,8 @@ session_start();
 
 
 //Abhängigkeiten
-require_once $_SERVER['DOCUMENT_ROOT'] . '/Uver/loginPVS/functions/function-db.php';
-require_once "backend-functions/events.php";
+require_once FUNCTIONS_PATH . '/function-db.php';
+require_once FUNCTIONS_PATH . "/events.php";
 
 $pdo = getDb();
 

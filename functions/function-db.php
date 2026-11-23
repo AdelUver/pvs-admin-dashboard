@@ -6,7 +6,7 @@ function getDB()
         return $db;
     }
 
-    require_once __DIR__ . '/../config/database.php';
+    require_once CONFIG_PATH . '/database.php';
 
     $dsn = sprintf("mysql:host=%s;dbname=%s;charset=%s", DB_HOST, DB_DATABASE, DB_CHARSET);
     $db = new PDO($dsn, DB_USERNAME, DB_PASSWORD);

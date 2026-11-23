@@ -10,15 +10,13 @@ function countActiveMembers(PDO $pdo): int
 {
     $sql = "
         SELECT COUNT(*) 
-        FROM admin_users
-        WHERE role = :role
-          AND is_active = :is_active
+        FROM memberships
+          WHERE is_active = :is_active
     ";
 
     $stmt = $pdo->prepare($sql);
 
     $stmt->execute([
-        ':role'      => 'user',
         ':is_active' => 1
     ]);
 
@@ -36,15 +34,13 @@ function countBlockedMembers(PDO $pdo): int
 {
     $sql = "
         SELECT COUNT(*)
-        FROM admin_users
-        WHERE role = :role
-          AND is_active = :is_active
+        FROM memberships
+        WHERE is_active = :is_active
     ";
 
     $stmt = $pdo->prepare($sql);
 
     $stmt->execute([
-        ':role'      => 'user',
         ':is_active' => 0
     ]);
 
@@ -61,17 +57,14 @@ function countNewMembersThisMonth(PDO $pdo): int
 {
     $sql = "
         SELECT COUNT(*)
-        FROM admin_users
-        WHERE role = :role
-          AND YEAR(created_at) = YEAR(CURDATE())
+        FROM memberships
+        WHERE YEAR(created_at) = YEAR(CURDATE())
           AND MONTH(created_at) = MONTH(CURDATE())
     ";
 
     $stmt = $pdo->prepare($sql);
 
-    $stmt->execute([
-        ':role' => 'user'
-    ]);
+    $stmt->execute();
 
     return (int) $stmt->fetchColumn();
 }
