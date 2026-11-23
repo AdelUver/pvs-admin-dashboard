@@ -1,13 +1,9 @@
 <?php
+declare(strict_types=1);
+
+require_once __DIR__ . '/config/config.php';
+
 error_reporting(E_ALL);
-ini_set('display_errors', 1);
-session_start();
+ini_set('display_errors', IS_LOCAL ? '1' : '0');
 
-//C:/xampp/htdocs/Uver/loginPVS
-$_SERVER['DOCUMENT_ROOT'] = $_SERVER['DOCUMENT_ROOT'] . '/Uver/loginPVS';
-
-$baseurl = '/Uver/loginPVS';
-global $baseurl;
-
-include_once $_SERVER['DOCUMENT_ROOT'] . '/functions/function-login.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/routes.php';
+include_once PROJECT_ROOT . '/routes.php';
