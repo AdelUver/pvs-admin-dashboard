@@ -338,3 +338,6 @@ $users = getAllUsers($pdo);
 <?php require_once MODALS_PATH . '/modal-user_form.php'; ?>
 
 <?php require_once MODALS_PATH . '/modal-user_show.php'; ?>
+
+
+<?php include_once SCRIPT_PATH . '/script-user.php'; ?>

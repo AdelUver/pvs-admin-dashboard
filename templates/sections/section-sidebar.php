@@ -96,8 +96,6 @@
 
 <?php
 
-global $baseurl;
-global $url;
 ?>
 <div class="sidebar" id="sidebar">
 

@@ -352,3 +352,4 @@ $profile = getProfile($pdo, $userId);
     </div>
 
 </div>
+<?php include_once SCRIPT_PATH . '/script-profile.php'; ?>

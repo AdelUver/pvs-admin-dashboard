@@ -42,7 +42,6 @@ $currentRoute = in_array($requestedRoute, $sectionRoutes, true) ? $requestedRout
 <?php include_once SECTIONS_PATH . '/section-head.php'; ?>
 
 <body>
-    <h1 class="container"><?php echo $currentRoute; ?></h1>
 
     <?php include SECTIONS_PATH . '/section-sidebar.php'; ?>
 
@@ -58,25 +57,21 @@ $currentRoute = in_array($requestedRoute, $sectionRoutes, true) ? $requestedRout
 
     </div>
 
-    <script>
-        const sidebar = document.getElementById("sidebar");
-
-        const content = document.getElementById("mainContent");
-
-        document.getElementById("toggleSidebar").onclick = function () {
-
-            sidebar.classList.toggle("collapsed");
-
-            content.classList.toggle("expanded");
-
-        };
-    </script>
-
 </body>
-<?php include_once SCRIPT_PATH . '/script-profile.php'; ?>
-<?php include_once SCRIPT_PATH . '/script-event.php'; ?>
-<?php include_once SCRIPT_PATH . '/script-user.php'; ?>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </html>
+
+
+<script>
+    const sidebar = document.getElementById("sidebar");
+
+    const content = document.getElementById("mainContent");
+
+    document.getElementById("toggleSidebar").onclick = function () {
+
+        sidebar.classList.toggle("collapsed");
+
+        content.classList.toggle("expanded");
+
+    };
+</script>

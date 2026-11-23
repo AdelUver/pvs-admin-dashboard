@@ -1,0 +1,133 @@
+/* =====================================================================
+   ROOT.CSS – globale Variablen (Design-Tokens)
+   ---------------------------------------------------------------------
+   REGEL: In dieser Datei stehen AUSSCHLIESSLICH Variablen.
+   Keine Selektoren wie body, h1, .btn …  – die gehören in die Section,
+   die sie braucht. So bleibt jede Section-Datei unabhängig, kann aber
+   überall dieselben Farben, Abstände und Schriften verwenden:
+
+       color: var(--pvs-gold);
+   ===================================================================== */
+
+@font-face {
+    font-family: "Inter";
+    src: url("../font/Inter-VariableFont_opsz,wght.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("../font/Inter-Italic-VariableFont_opsz,wght.ttf") format("truetype");
+    font-style: italic;
+    font-weight: 100 900;
+    font-display: swap;
+}
+
+:root {
+    /* ---------- Farben: Marke ---------- */
+    --pvs-gold: #d8b46b;
+    --pvs-gold-light: #f7d989;
+    --pvs-gold-dark: #c99d48;
+    --pvs-gold-hover: #f0ce83;
+    --pvs-gold-soft: rgba(216, 180, 107, 0.12);
+    --pvs-gold-line: rgba(216, 180, 107, 0.45);
+    --pvs-gold-gradient: linear-gradient(135deg, var(--pvs-gold-light), var(--pvs-gold-dark));
+
+    /* ---------- Farben: Hintergründe ----------
+       NUR Schwarz- und Grautöne (leicht warm). KEIN Blau/Navy:
+       Zu Gold passt ein warmes Schwarz – Blau wirkt daneben kalt. */
+    --pvs-bg-deep: #070707;
+    --pvs-bg-warm: #12100c;
+    --pvs-bg-black: #0b0b0b;
+    --pvs-bg-dark: #111111;
+    --pvs-bg-graphite: #171717;
+    --pvs-bg-gradient: linear-gradient(135deg, #070707 0%, #12100c 45%, #080706 100%);
+
+    /* halbtransparentes Schwarz für Navigation, Overlays & Glas-Effekte */
+    --pvs-glass: rgba(8, 8, 8, 0.6);
+    --pvs-glass-strong: rgba(8, 8, 8, 0.95);
+
+    /* ---------- Farben: Flächen & Linien ---------- */
+    --pvs-surface: rgba(255, 255, 255, 0.035);
+    --pvs-surface-strong: rgba(14, 13, 11, 0.82);
+    --pvs-border: rgba(255, 255, 255, 0.10);
+    --pvs-border-strong: rgba(255, 255, 255, 0.18);
+
+    /* ---------- Farben: Text ---------- */
+    --pvs-text: #f5f3ee;
+    --pvs-text-muted: rgba(255, 255, 255, 0.70);
+    --pvs-text-soft: rgba(255, 255, 255, 0.55);
+    --pvs-text-dark: #111111;
+
+    /* ---------- Fotos ----------
+       Farbstichige Fotos (z. B. türkises Meer) in den Schwarz/Gold-Look holen:
+       filter: var(--pvs-photo-tone) brightness(0.7); */
+    --pvs-photo-tone: grayscale(0.85) sepia(0.35);
+
+    /* ---------- Schriften ---------- */
+    --pvs-font-main: "Inter", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    --pvs-font-serif: Georgia, "Times New Roman", serif;
+
+    /* Schriftgrößen – wachsen mit Breite UND Höhe (min(vw, vh)),
+       damit eine Überschrift auch auf niedrigen Laptops in 100vh passt */
+    --pvs-fs-display: clamp(2.3rem, min(6.2vw, 8.5vh), 6rem);
+    --pvs-fs-h2: clamp(2rem, min(4.6vw, 6.8vh), 4.6rem);
+    --pvs-fs-h3: clamp(1.05rem, 1.3vw, 1.35rem);
+    --pvs-fs-body: clamp(0.88rem, 0.35vw + 0.8rem, 1.05rem);
+    --pvs-fs-small: 0.82rem;
+    --pvs-fs-eyebrow: 0.72rem;
+    --pvs-ls-eyebrow: 0.28em;
+
+    /* ---------- Layout ---------- */
+    --pvs-nav-height: 72px;
+    --pvs-section-height: 100vh;
+    /* Fallback für alte Browser   */
+    --pvs-container: 1240px;
+    --pvs-gutter: clamp(16px, 4vw, 64px);
+    /* seitlicher Abstand          */
+    --pvs-section-pad-top: calc(var(--pvs-nav-height) + clamp(12px, 3vh, 40px));
+    --pvs-section-pad-bottom: clamp(16px, 4vh, 48px);
+
+    /* ---------- Form ---------- */
+    --pvs-radius-sm: 10px;
+    --pvs-radius: 16px;
+    --pvs-radius-lg: 24px;
+    --pvs-shadow: 0 24px 60px rgba(0, 0, 0, 0.40);
+    --pvs-shadow-gold: 0 14px 32px rgba(214, 171, 85, 0.22);
+
+    /* ---------- Bewegung ---------- */
+    --pvs-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --pvs-transition: 0.35s var(--pvs-ease);
+
+    /* ---------- Ebenen (z-index) ---------- */
+    --pvs-z-bg: 0;
+    --pvs-z-content: 2;
+    --pvs-z-fade: 3;
+    --pvs-z-nav: 1030;
+    --pvs-z-top-button: 1040;
+}
+
+/* "Small Viewport Height": auf dem Handy ist 100vh größer als der
+   sichtbare Bereich (Adressleiste!). 100svh ist exakt der sichtbare Teil. */
+@supports (height: 100svh) {
+    :root {
+        --pvs-section-height: 100svh;
+    }
+}
+
+/* Handy quer (sehr wenig Höhe): Hier passt keine Section in einen
+   Bildschirm. Höhe wird auf "auto" gestellt -> normales Scrollen. */
+@media (max-height: 520px) and (orientation: landscape) {
+    :root {
+        --pvs-section-height: auto;
+    }
+}
+
+/* Auf Handys wird die Navigation etwas niedriger */
+@media (max-width: 767.98px) {
+    :root {
+        --pvs-nav-height: 64px;
+    }
+}

@@ -374,3 +374,6 @@ $events = getAllEvents($pdo);
 
 <?php require_once MODALS_PATH . '/modal-register_show.php'; ?>
 
+
+<?php include_once SCRIPT_PATH . '/script-event.php'; ?>
+
