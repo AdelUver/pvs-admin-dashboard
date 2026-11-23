@@ -1,0 +1,10 @@
+23.07: 
+
+Lögig für An-und Abmeldung bei einer Event ist durch einige Funktionen erledigt
+(updateEventStatus($pdo, $eventId);)
+
+Projekt wird admin-dashboard heißen.
+
+
+E-Mail: test10@gmail.at
+PWD: test10

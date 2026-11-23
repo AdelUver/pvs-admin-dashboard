@@ -1,0 +1,11 @@
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Wenn die angefragte Datei oder das Verzeichnis physisch existiert, normal laden
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Andernfalls alles auf die index.php umleiten (wie in deiner web.config)
+    RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+</IfModule>
