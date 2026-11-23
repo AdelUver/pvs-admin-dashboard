@@ -1,19 +1,17 @@
 <!--  Add Event Formular  -->
-<div class="modal fade" id="eventModal" tabindex="-1">
-
-    <div class="modal-dialog modal-xl">
+<dialog class="app-modal modal-xl" id="eventModal" aria-labelledby="eventModalTitle">
 
         <div class="modal-content">
 
             <div class="modal-header">
 
-                <h4 class="modal-title">
+                <h4 class="modal-title" id="eventModalTitle">
 
                     Neues Event erstellen
 
                 </h4>
 
-                <button class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-modal-close aria-label="Schließen"></button>
 
             </div>
 
@@ -96,7 +94,7 @@
 
                             </label>
 
-                            <input type="date" name="event_date" id="event_date" class="form-control">
+                            <input type="date" name="event_date" id="event_date" class="form-control" required>
 
                         </div>
 
@@ -108,7 +106,7 @@
 
                             </label>
 
-                            <input type="time" name="event_time" id="event_time" class="form-control">
+                            <input type="time" name="event_time" id="event_time" class="form-control" required>
 
                         </div>
 
@@ -124,7 +122,7 @@
 
                             </label>
 
-                            <input type="text" name="location" id="location" class="form-control">
+                            <input type="text" name="location" id="location" class="form-control" required>
 
                         </div>
 
@@ -136,7 +134,7 @@
 
                             </label>
 
-                            <input type="text" name="street" id="street" class="form-control">
+                            <input type="text" name="street" id="street" class="form-control" required>
 
                         </div>
 
@@ -148,7 +146,7 @@
 
                             </label>
 
-                            <input type="text" name="post_code" id="postCode" class="form-control">
+                            <input type="text" name="post_code" id="postCode" class="form-control" pattern="[0-9]{4,5}" required>
 
                         </div>
 
@@ -160,7 +158,7 @@
 
                             </label>
 
-                            <input type="text" name="city" id="city" class="form-control">
+                            <input type="text" name="city" id="city" class="form-control" required>
 
                         </div>
 
@@ -173,7 +171,7 @@
 
                             </label>
 
-                            <input type="number" name="max_participants" id="max_participants" class="form-control">
+                            <input type="number" name="max_participants" id="max_participants" class="form-control" min="1" step="1" required>
 
                         </div>
 
@@ -185,7 +183,7 @@
 
                             </label>
 
-                            <input type="date" name="registration_deadline" id="registration_deadline" class="form-control">
+                            <input type="date" name="registration_deadline" id="registration_deadline" class="form-control" required>
 
                         </div>
 
@@ -195,7 +193,7 @@
 
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-secondary" data-modal-close>
 
                         Abbrechen
 
@@ -203,7 +201,7 @@
 
                     <button class="btn btn-success" type="submit" name="saveEvent" id="saveEvent">
 
-                        <i class="bi bi-floppy"></i>
+                        <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
 
                         Event speichern
 
@@ -214,7 +212,4 @@
             </form>
 
         </div>
-
-    </div>
-
-</div>
+</dialog>

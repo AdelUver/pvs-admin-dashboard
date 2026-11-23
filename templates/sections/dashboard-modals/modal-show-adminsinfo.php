@@ -30,7 +30,7 @@ $dashboard = getDashboardData($pdo);
         <div class="dashboard-card border-primary">
 
             <div class="dashboard-icon text-primary">
-                <i class="bi bi-people"></i>
+                <i class="fa-solid fa-users" aria-hidden="true"></i>
             </div>
 
             <div class="dashboard-content">
@@ -51,7 +51,7 @@ $dashboard = getDashboardData($pdo);
         <div class="dashboard-card border-danger">
 
             <div class="dashboard-icon text-danger">
-                <i class="bi bi-shield-fill-check"></i>
+                <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
             </div>
 
             <div class="dashboard-content">
@@ -72,7 +72,7 @@ $dashboard = getDashboardData($pdo);
         <div class="dashboard-card border-warning">
 
             <div class="dashboard-icon text-warning">
-                <i class="bi bi-person-badge"></i>
+                <i class="fa-solid fa-id-badge" aria-hidden="true"></i>
             </div>
 
             <div class="dashboard-content">
@@ -93,7 +93,7 @@ $dashboard = getDashboardData($pdo);
         <div class="dashboard-card border-success">
 
             <div class="dashboard-icon text-success">
-                <i class="bi bi-pencil-square"></i>
+                <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i>
             </div>
 
             <div class="dashboard-content">

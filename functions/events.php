@@ -128,116 +128,81 @@ function getEventParticipants(PDO $pdo, int $eventId): array
 //$_POST validieren
 function validateData(array $input): array
 {
-    // Titel
     $title = trim($input['title'] ?? '');
     if ($title === '') {
-        echo 'Bitte einen Eventtitel eingeben.';
-        exit();
+        throw new InvalidArgumentException('Bitte einen Eventtitel eingeben.');
     }
 
-    // Status
     $allowedStatus = ['planned', 'full', 'completed', 'cancelled'];
-
     $status = $input['status'] ?? 'planned';
     if (!in_array($status, $allowedStatus, true)) {
-        echo 'Ungültiger Status.';
-        exit();
+        throw new InvalidArgumentException('Ungültiger Status.');
     }
 
-    // Beschreibung
     $description = trim($input['description'] ?? '');
-
-    // Datum
     $date = trim($input['event_date'] ?? '');
-
-    if ($date === '') {
-        echo 'Bitte ein Datum auswählen.';
-        exit();
+    $dateObj = DateTimeImmutable::createFromFormat('!Y-m-d', $date);
+    $dateErrors = DateTimeImmutable::getLastErrors();
+    if (
+        !$dateObj ||
+        ($dateErrors !== false && ($dateErrors['warning_count'] > 0 || $dateErrors['error_count'] > 0)) ||
+        $dateObj->format('Y-m-d') !== $date
+    ) {
+        throw new InvalidArgumentException('Bitte ein gültiges Datum auswählen.');
     }
 
-    $dateObj = DateTime::createFromFormat('Y-m-d', $date);
-
-    if (!$dateObj || $dateObj->format('Y-m-d') !== $date) {
-        echo 'Ungültiges Datum.';
-        exit();
-    }
-
-    // Uhrzeit
     $time = trim($input['event_time'] ?? '');
-
-    if ($time === '') {
-        echo 'Bitte eine Uhrzeit auswählen.';
-        exit();
+    $timeObj = DateTimeImmutable::createFromFormat('!H:i', $time);
+    $timeErrors = DateTimeImmutable::getLastErrors();
+    if (
+        !$timeObj ||
+        ($timeErrors !== false && ($timeErrors['warning_count'] > 0 || $timeErrors['error_count'] > 0)) ||
+        $timeObj->format('H:i') !== $time
+    ) {
+        throw new InvalidArgumentException('Bitte eine gültige Uhrzeit auswählen.');
     }
 
-    $timeObj = DateTime::createFromFormat('H:i', $time);
-
-    if (!$timeObj || $timeObj->format('H:i') !== $time) {
-        echo 'Ungültige Uhrzeit.';
-        exit();
-    }
-
-    // Ort
     $location = trim($input['location'] ?? '');
     if ($location === '') {
-        echo 'Bitte einen Ort eingeben.';
-        exit();
+        throw new InvalidArgumentException('Bitte einen Ort eingeben.');
     }
 
-    // Straße
     $street = trim($input['street'] ?? '');
     if ($street === '') {
-        echo 'Bitte eine Straße eingeben.';
-        exit();
+        throw new InvalidArgumentException('Bitte eine Straße eingeben.');
     }
 
-    // PLZ
     $postCode = trim($input['post_code'] ?? '');
-    if ($postCode === '' && !preg_match('/^\d{4,5}$/', $postCode)) {
-        echo 'Ungültige Postleitzahl.';
-        exit();
+    if (preg_match('/^\d{4,5}$/D', $postCode) !== 1) {
+        throw new InvalidArgumentException('Bitte eine gültige Postleitzahl eingeben.');
     }
 
-    // Stadt
     $city = trim($input['city'] ?? '');
     if ($city === '') {
-        echo 'Bitte eine Stadt eingeben.';
-        exit();
+        throw new InvalidArgumentException('Bitte eine Stadt eingeben.');
     }
 
-    // Max. Teilnehmer
-    if ($input['max_participants'] === '') {
-        echo 'Bitte eine Max. Teilnehmerzahl eingeben.';
-        exit();
+    $maxParticipants = filter_var($input['max_participants'] ?? null, FILTER_VALIDATE_INT);
+    if ($maxParticipants === false || $maxParticipants < 1) {
+        throw new InvalidArgumentException('Die maximale Teilnehmerzahl muss eine positive ganze Zahl sein.');
     }
 
-    $maxParticipants = filter_input(INPUT_POST, 'max_participants', FILTER_VALIDATE_INT);
-
-    if ($maxParticipants === false) {
-        echo 'Max. Teilnehmer muss eine ganze Zahl sein.';
-        exit();
-    }
-
-
-    // Letzter Anmeldetag
-    $lastRegisterDate = $input['registration_deadline'] ?? '';
-    if ($lastRegisterDate === '' || !DateTime::createFromFormat('Y-m-d', $lastRegisterDate)) {
-        echo 'Ungültiger Anmeldeschluss.';
-        exit();
-    }
-
-    // Optional: Anmeldeschluss darf nicht nach dem Event liegen
+    $lastRegisterDate = trim($input['registration_deadline'] ?? '');
+    $deadlineObj = DateTimeImmutable::createFromFormat('!Y-m-d', $lastRegisterDate);
+    $deadlineErrors = DateTimeImmutable::getLastErrors();
     if (
-        $date !== '' &&
-        $lastRegisterDate !== '' &&
-        strtotime($lastRegisterDate) > strtotime($date)
+        !$deadlineObj ||
+        ($deadlineErrors !== false && ($deadlineErrors['warning_count'] > 0 || $deadlineErrors['error_count'] > 0)) ||
+        $deadlineObj->format('Y-m-d') !== $lastRegisterDate
     ) {
-        echo 'Der Anmeldeschluss darf nicht nach dem Eventdatum liegen.';
-        exit();
+        throw new InvalidArgumentException('Bitte einen gültigen Anmeldeschluss auswählen.');
     }
 
-    // Alles erfolgreich?
-    $data = [
+    if ($lastRegisterDate > $date) {
+        throw new InvalidArgumentException('Der Anmeldeschluss darf nicht nach dem Eventdatum liegen.');
+    }
+
+    return [
         'title' => $title,
         'event_date' => $date,
         'event_time' => $time,
@@ -248,11 +213,8 @@ function validateData(array $input): array
         'description' => $description,
         'max_participants' => $maxParticipants,
         'registration_deadline' => $lastRegisterDate,
-        'status' => $status,
-        'created_by' => $_SESSION['userId'],
-        'updated_by' => $_SESSION['userId']
+        'status' => $status
     ];
-    return $data;
 }
 
 //Alle nicht gelöschten Events laden
@@ -299,6 +261,7 @@ function getEventById(PDO $pdo, int $eventId): array|false
         ON events.updated_by = updated.user_id
 
     WHERE events.event_id = :id
+      AND events.deleted = 0
 
     LIMIT 1");
 
@@ -379,7 +342,8 @@ function updateEvent(PDO $pdo, int $eventId, int $userId, array $data): bool
                 registration_deadline = :registration_deadline,
                 status = :status,
                 updated_by = :updated_by
-            WHERE event_id = :event_id";
+            WHERE event_id = :event_id
+              AND deleted = 0";
 
     $stmt = $pdo->prepare($sql);
 
@@ -406,14 +370,17 @@ function deleteEvent(PDO $pdo, int $eventId, int $userId): bool
     $sql = "UPDATE events
             SET deleted = 1,
                 updated_by = :updated_by
-            WHERE event_id = :event_id";
+            WHERE event_id = :event_id
+              AND deleted = 0";
 
     $stmt = $pdo->prepare($sql);
 
-    return $stmt->execute([
+    $success = $stmt->execute([
         'event_id' => $eventId,
         'updated_by' => $userId
     ]);
+
+    return $success && $stmt->rowCount() > 0;
 }
 
 //Gelöschtes Event wiederherstellen

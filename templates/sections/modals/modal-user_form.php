@@ -1,16 +1,14 @@
-<div class="modal fade" id="userModal" tabindex="-1">
-
-    <div class="modal-dialog modal-lg">
+<dialog class="app-modal modal-lg" id="userModal" aria-labelledby="userModalTitle">
 
         <div class="modal-content">
 
             <div class="modal-header">
 
-                <h4 class="modal-title">
+                <h4 class="modal-title" id="userModalTitle">
                     Benutzer hinzufügen
                 </h4>
 
-                <button class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-modal-close aria-label="Schließen"></button>
 
             </div>
 
@@ -83,12 +81,12 @@
 
                 <div class="modal-footer">
 
-                    <a class="btn btn-secondary" data-bs-dismiss="modal">
+                    <button type="button" class="btn btn-secondary" data-modal-close>
                         Abbrechen
-                    </a>
+                    </button>
 
                     <button class="btn btn-success" id="saveUser">
-                        <i class="bi bi-floppy"></i>
+                        <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
                         Speichern
                     </button>
 
@@ -97,7 +95,4 @@
             </form>
 
         </div>
-
-    </div>
-
-</div>
+</dialog>

@@ -1,22 +1,21 @@
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-
-
 <script>
     const password = document.getElementById("password");
     const toggle = document.getElementById("togglePassword");
 
-    toggle.addEventListener("click", () => {
+    if (password && toggle) {
+        toggle.addEventListener("click", () => {
 
-        password.type =
-            password.type === "password" ?
-                "text" :
-                "password";
+            password.type =
+                password.type === "password" ?
+                    "text" :
+                    "password";
 
-        toggle.innerHTML =
-            password.type === "password" ?
-                "👁" :
-                "🙈";
-    });
+            toggle.innerHTML =
+                password.type === "password" ?
+                    "👁" :
+                    "🙈";
+        });
+    }
 
     // Platzhalter für spätere Backend-Fehler
     function showLoginError(message) {

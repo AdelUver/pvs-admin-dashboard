@@ -32,7 +32,7 @@
 
     <button id="toggleSidebar">
 
-        <i class="bi bi-list"></i>
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
 
     </button>
 

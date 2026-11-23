@@ -6,10 +6,11 @@
         color: #1f2937;
 
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
-        height: 100px;
-        width: 100px;
+        height: auto;
+        width: auto;
+        margin: 0;
 
     }
 
@@ -51,7 +52,7 @@
     }
 
 
-    colo .filter-box {
+    .filter-box {
 
         background: white;
 
@@ -88,9 +89,9 @@ $users = getAllUsers($pdo);
 
         </h2>
 
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userModal" id="addUserbtn">
+        <button type="button" class="btn btn-primary" id="addUserbtn">
 
-            <i class="bi bi-plus-circle"></i>
+            <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
 
             Neuer Benutzer
 
@@ -140,7 +141,7 @@ $users = getAllUsers($pdo);
 
                 <button class="btn btn-outline-primary w-100" id="filterUser">
 
-                    <i class="bi bi-search"></i>
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
 
                     Filtern
 
@@ -252,18 +253,18 @@ $users = getAllUsers($pdo);
 
                                 <button class="btn btn-outline-info btn-sm action-btn showUser" data-id="<?= $user['user_id'] ?>" title="show">
 
-                                    <i class="bi bi-eye"></i>
+                                    <i class="fa-solid fa-eye" aria-hidden="true"></i>
 
                                 </button>
 
                                 <button
                                     class="btn btn-outline-warning btn-sm action-btn updateUser" data-id="<?= $user['user_id'] ?>" title="update">
-                                    <i class="bi bi-pencil"></i>
+                                    <i class="fa-solid fa-pen" aria-hidden="true"></i>
                                 </button>
 
                                 <button
                                     class="btn btn-outline-danger btn-sm action-btn deleteUser" data-id="<?= $user['user_id'] ?>" title="delete">
-                                    <i class="bi bi-trash"></i>
+                                    <i class="fa-solid fa-trash" aria-hidden="true"></i>
                                 </button>
 
 

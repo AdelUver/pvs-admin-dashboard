@@ -1,19 +1,17 @@
 <!-- Show register Modal -->
-<div class="modal fade" id="registrationModal" tabindex="-1">
-
-    <div class="modal-dialog modal-xl">
+<dialog class="app-modal modal-xl" id="registrationModal" aria-labelledby="registrationTitle">
 
         <div class="modal-content">
 
             <div class="modal-header">
 
-                <h4 class="modal-title">
+                <h4 class="modal-title" id="registrationTitle">
 
                     Eventanmeldungen
 
                 </h4>
 
-                <button class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-modal-close aria-label="Schließen"></button>
 
             </div>
 
@@ -29,7 +27,6 @@
                             <th>Name</th>
                             <th>E-Mail</th>
                             <th>Status</th>
-                            <th>Angemeldet</th>
                             <th>Angemeldet am</th>
 
                         </tr>
@@ -43,9 +40,6 @@
                 </table>
 
             </div>
-
-        </div>
-
-    </div>
+    </dialog>
 
 </div>

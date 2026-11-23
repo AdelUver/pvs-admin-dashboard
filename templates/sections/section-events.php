@@ -6,10 +6,11 @@
         color: #1f2937;
 
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
-        height: 100px;
-        width: 100px;
+        height: auto;
+        width: auto;
+        margin: 0;
 
     }
 
@@ -51,7 +52,7 @@
     }
 
 
-    colo .filter-box {
+    .filter-box {
 
         background: white;
 
@@ -74,7 +75,6 @@ require_once FUNCTIONS_PATH . '/function-db.php';
 
 //Daten
 $pdo = getDB();
-$userId = $_SESSION['userId'];
 $events = getAllEvents($pdo);
 
 ?>
@@ -89,9 +89,9 @@ $events = getAllEvents($pdo);
 
         </h2>
 
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#eventModal">
+        <button type="button" class="btn btn-primary" id="addEventButton">
 
-            <i class="bi bi-plus-circle"></i>
+            <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
 
             Neues Event
 
@@ -125,11 +125,11 @@ $events = getAllEvents($pdo);
 
                 <select class="form-select" id="eventStatus">
 
-                    <option>Alle Status</option>
-                    <option>Geplant</option>
-                    <option>Ausgebucht</option>
-                    <option>Abgeschlossen</option>
-                    <option>Abgesagt</option>
+                    <option value="">Alle Status</option>
+                    <option value="planned">Geplant</option>
+                    <option value="full">Ausgebucht</option>
+                    <option value="completed">Abgeschlossen</option>
+                    <option value="cancelled">Abgesagt</option>
 
                 </select>
 
@@ -137,9 +137,9 @@ $events = getAllEvents($pdo);
 
             <div class="col-lg-2">
 
-                <button class="btn btn-outline-primary w-100" id="filterEvent">
+                <button type="button" class="btn btn-outline-primary w-100" id="filterEvent">
 
-                    <i class="bi bi-search"></i>
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
 
                     Filtern
 
@@ -155,7 +155,8 @@ $events = getAllEvents($pdo);
 
         <div class="card-body">
 
-            <table class="table table-hover align-middle">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
 
                 <thead>
 
@@ -187,9 +188,14 @@ $events = getAllEvents($pdo);
 
                 <tbody id="tableBody">
 
+                    <tr id="eventEmptyState" <?= $events ? 'hidden' : '' ?>>
+                        <td colspan="8">Keine Events gefunden.</td>
+                    </tr>
+
                     <?php foreach ($events as $event): ?>
 
-                        <tr data-id="<?= $event['event_id'] ?>">
+                        <tr data-id="<?= (int) $event['event_id'] ?>"
+                            data-status="<?= htmlspecialchars($event['status'], ENT_QUOTES, 'UTF-8') ?>">
 
                             <td>
 
@@ -199,31 +205,31 @@ $events = getAllEvents($pdo);
 
                             <td>
 
-                                <?= htmlspecialchars($event["title"]) ?>
+                                <?= htmlspecialchars($event["title"], ENT_QUOTES, 'UTF-8') ?>
 
                             </td>
 
                             <td>
 
-                                <?= $event["event_date"] ?>
+                                <?= htmlspecialchars($event["event_date"], ENT_QUOTES, 'UTF-8') ?>
 
                             </td>
 
                             <td>
 
-                                <?= $event["event_time"] ?>
+                                <?= htmlspecialchars($event["event_time"], ENT_QUOTES, 'UTF-8') ?>
 
                             </td>
 
                             <td>
 
-                                <?= htmlspecialchars($event["location"]) ?>
+                                <?= htmlspecialchars($event["location"], ENT_QUOTES, 'UTF-8') ?>
 
                             </td>
 
                             <td>
 
-                                <?= $event["max_participants"] ?>
+                                <?= (int) $event["max_participants"] ?>
 
                             </td>
 
@@ -253,7 +259,7 @@ $events = getAllEvents($pdo);
                                         break;
 
                                     default:
-                                        echo '<span class="badge bg-danger">Unbekant</span>';
+                                        echo '<span class="badge bg-danger">Unbekannt</span>';
                                 }
 
                                 ?>
@@ -262,35 +268,38 @@ $events = getAllEvents($pdo);
 
                             <td class="text-center">
 
-                                <button class="btn btn-outline-info btn-sm action-btn showEvent" title="show">
+                                <button type="button" class="btn btn-outline-info btn-sm action-btn showEvent"
+                                    title="Details anzeigen" aria-label="Details anzeigen">
 
-                                    <i class="bi bi-eye"></i>
-
-                                </button>
-
-                                <button class="btn btn-outline-warning btn-sm action-btn updateEvent" title="update">
-
-                                    <i class="bi bi-pencil"></i>
+                                    <i class="fa-solid fa-eye" aria-hidden="true"></i>
 
                                 </button>
 
-                                <button class="btn btn-outline-success btn-sm action-btn exportParticipants"
-                                    title="Teilnehmer exportieren">
+                                <button type="button" class="btn btn-outline-warning btn-sm action-btn updateEvent"
+                                    title="Event bearbeiten" aria-label="Event bearbeiten">
 
-                                    <i class="bi bi-download"></i>
-
-                                </button>
-
-                                <button class="btn btn-outline-danger btn-sm action-btn deleteEvent" title="delete">
-
-                                    <i class="bi bi-trash"></i>
+                                    <i class="fa-solid fa-pen" aria-hidden="true"></i>
 
                                 </button>
 
-                                <button class="btn btn-outline-primary btn-sm action-btn showRegistrations"
-                                    title="Anmeldungen">
+                                <button type="button" class="btn btn-outline-success btn-sm action-btn exportParticipants"
+                                    title="Teilnehmer exportieren" aria-label="Teilnehmer exportieren">
 
-                                    <i class="bi bi-people"></i>
+                                    <i class="fa-solid fa-download" aria-hidden="true"></i>
+
+                                </button>
+
+                                <button type="button" class="btn btn-outline-danger btn-sm action-btn deleteEvent"
+                                    title="Event löschen" aria-label="Event löschen">
+
+                                    <i class="fa-solid fa-trash" aria-hidden="true"></i>
+
+                                </button>
+
+                                <button type="button" class="btn btn-outline-primary btn-sm action-btn showRegistrations"
+                                    title="Anmeldungen anzeigen" aria-label="Anmeldungen anzeigen">
+
+                                    <i class="fa-solid fa-users" aria-hidden="true"></i>
 
                                 </button>
 
@@ -302,7 +311,8 @@ $events = getAllEvents($pdo);
 
                 </tbody>
 
-            </table>
+                </table>
+            </div>
 
             <!--
             <nav>
@@ -362,84 +372,88 @@ $events = getAllEvents($pdo);
 </div>
 
 <script>
-    $(document).ready(function () {
+    const eventEndpoint = <?= json_encode(BACKEND_URL . '/backend-events.php', JSON_UNESCAPED_SLASHES) ?>;
+    const loginUrl = <?= json_encode(BASE_URL . '/login', JSON_UNESCAPED_SLASHES) ?>;
 
-        // Add new Event
-        $("#addEvent").on("submit", function (e) {
+    $(document).ready(function () {
+        const eventForm = $("#addEvent");
+        const eventDialog = document.getElementById("eventModal");
+
+        function showRequestError(xhr, fallbackMessage) {
+            if (xhr.status === 401) {
+                window.location.href = loginUrl;
+                return;
+            }
+
+            alert((xhr.responseText || "").trim() || fallbackMessage);
+        }
+
+        function resetEventForm() {
+            eventForm[0].reset();
+            eventForm.removeAttr("data-event-id");
+            $("#eventModalTitle").text("Neues Event erstellen");
+            $("#saveEvent").html(
+                '<i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Event speichern'
+            );
+        }
+
+        $("#addEventButton").on("click", function () {
+            resetEventForm();
+            eventDialog.showModal();
+        });
+
+        eventForm.on("submit", function (e) {
             e.preventDefault();
 
             var formData = new FormData(this);
-
-            var eventId = $("#addEvent").data("id");
+            var eventId = eventForm.attr("data-event-id");
 
             if (eventId) {
-
                 formData.append("updateEvent", 1);
                 formData.append("id", eventId);
-
             } else {
-
                 formData.append("createEvent", 1);
-
             }
 
             $.ajax({
-                url: "/Uver/pvs-admin-dashboard/backend/backend-events.php",
+                url: eventEndpoint,
                 method: "POST",
                 data: formData,
                 contentType: false,
                 processData: false,
                 success: function (response) {
-
                     if (response.trim() === "success") {
-
-                        // Formular zurücksetzen
-                        $("#addEvent").removeAttr("data-id");
-                        $("#addEvent")[0].reset();
-
-                        // Modal wieder auf "Neues Event" stellen
-                        $(".modal-title").text("Neues Event erstellen");
-
-                        $("#saveEvent").html(`
-                        <i class="bi bi-floppy"></i>
-                         Event speichern
-                        `);
-
+                        resetEventForm();
+                        eventDialog.close();
                         window.location.reload();
-
                     } else {
-
                         alert(response);
-
                     }
-
                 },
-                error: function (xhr, status, error) {
-                    console.error(error);
-                    alert("Unerwarteter Fehler.");
+                error: function (xhr) {
+                    showRequestError(xhr, "Das Event konnte nicht gespeichert werden.");
                 }
             });
         });
 
-        //show Event
         $(".showEvent").on("click", function () {
-            var id = $(this).closest("tr").data("id");
-
+            var id = $(this).closest("tr").attr("data-id");
             $.ajax({
-
-                url: "/Uver/pvs-admin-dashboard/backend/backend-events.php",
-
+                url: eventEndpoint,
                 method: "POST",
-
+                dataType: "json",
                 data: {
                     showEvent: 1,
                     id: id
                 },
-
                 success: function (response) {
-
-                    var event = JSON.parse(response);
-
+                    var event = response;
+                    var statusLabels = {
+                        planned: "Geplant",
+                        full: "Ausgebucht",
+                        completed: "Abgeschlossen",
+                        cancelled: "Abgesagt"
+                    };
                     $("#show_event_id").text(event.event_id);
                     $("#show_title").text(event.title);
                     $("#show_description").text(event.description);
@@ -451,54 +465,37 @@ $events = getAllEvents($pdo);
                     $("#show_city").text(event.city);
                     $("#show_max").text(event.max_participants);
                     $("#show_deadline").text(event.registration_deadline);
-                    $("#show_status").text(event.status);
+                    $("#show_status").text(statusLabels[event.status] || event.status);
 
                     $("#show_created_at").text(event.created_at);
                     $("#show_updated_at").text(event.updated_at);
-                    $("#show_created_by").text(event.created_last_name + " " + event.created_first_name);
-                    $("#show_updated_by").text(event.updated_last_name + " " + event.updated_first_name);
-
-                    $("#showEventModal").modal("show");
-
+                    $("#show_created_by").text([event.created_last_name, event.created_first_name].filter(Boolean).join(" "));
+                    $("#show_updated_by").text([event.updated_last_name, event.updated_first_name].filter(Boolean).join(" "));
+                    document.getElementById("showEventModal").showModal();
                 },
-
-                error: function () {
-
-                    alert("Fehler beim Laden.");
-
+                error: function (xhr) {
+                    showRequestError(xhr, "Die Eventdetails konnten nicht geladen werden.");
                 }
-
             });
         });
 
-
-        //update Event
         $(".updateEvent").on("click", function () {
-            var id = $(this).closest("tr").data("id");
-
+            var id = $(this).closest("tr").attr("data-id");
             $.ajax({
-
-                url: "/Uver/pvs-admin-dashboard/backend/backend-events.php",
-
+                url: eventEndpoint,
                 method: "POST",
-
+                dataType: "json",
                 data: {
                     updateEvent: 1,
                     id: id,
                     load: 1
                 },
-
-                success: function (response) {
-                    console.log(response);
-                    var event = JSON.parse(response);
-                    var modal = new bootstrap.Modal(document.getElementById("eventModal"));
-
-
+                success: function (event) {
                     $("#title").val(event.title);
                     $("#status").val(event.status);
                     $("#description").val(event.description);
                     $("#event_date").val(event.event_date);
-                    $("#event_time").val(event.event_time.substring(0, 5));
+                    $("#event_time").val(String(event.event_time || "").slice(0, 5));
                     $("#location").val(event.location);
                     $("#street").val(event.street);
                     $("#postCode").val(event.post_code);
@@ -506,40 +503,25 @@ $events = getAllEvents($pdo);
                     $("#max_participants").val(event.max_participants);
                     $("#registration_deadline").val(event.registration_deadline);
 
-                    $("#addEvent").attr("data-id", event.event_id);
-
-                    $("#eventModal .modal-title").text("Event bearbeiten");
-
-                    $("#saveEvent").html('<i class="bi bi-floppy"></i> Änderungen speichern');
-
-                    console.log(event);
-
-                    console.log($("#title").val());
-                    console.log($("#date").val());
-                    console.log($("#location").val());
-
-                    console.log($("#date").length);
-                    console.log($("#title").length);
-                    console.log($("#eventModal").length);
-
-                    modal.show();
-
+                    eventForm.attr("data-event-id", event.event_id);
+                    $("#eventModalTitle").text("Event bearbeiten");
+                    $("#saveEvent").html('<i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Änderungen speichern');
+                    eventDialog.showModal();
+                },
+                error: function (xhr) {
+                    showRequestError(xhr, "Das Event konnte nicht zum Bearbeiten geladen werden.");
                 }
-
             });
         });
 
-
-        //delete Event
         $(".deleteEvent").on("click", function () {
             if (!confirm("Möchtest du dieses Event wirklich löschen?")) {
                 return;
             }
 
-            var id = $(this).closest("tr").data("id");
-
+            var id = $(this).closest("tr").attr("data-id");
             $.ajax({
-                url: "/Uver/pvs-admin-dashboard/backend/backend-events.php",
+                url: eventEndpoint,
                 method: "POST",
                 data: {
                     deleteEvent: 1,
@@ -552,151 +534,117 @@ $events = getAllEvents($pdo);
                         alert(response);
                     }
                 },
-                error: function () {
-                    alert("Unerwarteter Fehler.")
+                error: function (xhr) {
+                    showRequestError(xhr, "Das Event konnte nicht gelöscht werden.");
                 }
-
             });
         });
 
-        //Events Teilnehmer exportieren
         $(".exportParticipants").on("click", function () {
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = eventEndpoint;
+            form.hidden = true;
 
-            var id = $(this).closest("tr").data("id");
-
-            var form = $('<form>', {
-                method: 'POST',
-                action: '/Uver/pvs-admin-dashboard/backend/backend-events.php'
+            [["exportParticipants", 1], ["id", $(this).closest("tr").attr("data-id")]].forEach(function (item) {
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = item[0];
+                input.value = item[1];
+                form.appendChild(input);
             });
 
-            form.append($('<input>', {
-                type: 'hidden',
-                name: 'exportParticipants',
-                value: 1
-            }));
-
-            form.append($('<input>', {
-                type: 'hidden',
-                name: 'id',
-                value: id
-            }));
-
-            $('body').append(form);
-
+            document.body.appendChild(form);
             form.submit();
-
-            form.remove();
-
         });
 
-        //Show register
         $(".showRegistrations").on("click", function () {
-
-            var id = $(this).closest("tr").data("id");
-
+            var id = $(this).closest("tr").attr("data-id");
             $.ajax({
-
-                url: "/Uver/pvs-admin-dashboard/backend/backend-events.php",
-
+                url: eventEndpoint,
                 method: "POST",
-
+                dataType: "json",
                 data: {
-
                     showRegistrations: 1,
                     id: id
-
                 },
-
                 success: function (response) {
+                    var body = document.getElementById("registrationTableBody");
+                    body.replaceChildren();
 
-                    var registrations = JSON.parse(response);
+                    response.forEach(function (registration) {
+                        var row = document.createElement("tr");
+                        var statusLabels = {
+                            registered: "Angemeldet",
+                            cancelled: "Storniert",
+                            waitlisted: "Warteliste"
+                        };
+                        var values = [
+                            registration.user_id,
+                            [registration.last_name, registration.first_name].filter(Boolean).join(" "),
+                            registration.email,
+                            statusLabels[registration.status] || registration.status,
+                            registration.registered_at
+                        ];
 
-                    var html = "";
+                        values.forEach(function (value) {
+                            var cell = document.createElement("td");
+                            cell.textContent = value == null ? "" : value;
+                            row.appendChild(cell);
+                        });
 
-                    registrations.forEach(function (user) {
-
-                        html += `
-                    <tr>
-
-                        <td>${user.user_id}</td>
-
-                        <td>
-                            ${user.last_name}
-                            ${user.first_name}
-                        </td>
-
-                        <td>${user.email}</td>
-
-                        <td>${user.phone}</td>
-
-                        <td>${user.status}</td>
-
-                        <td>${user.registered_at}</td>
-
-                    </tr>
-                `;
-
+                        body.appendChild(row);
                     });
 
-                    $("#registrationTableBody").html(html);
+                    if (response.length === 0) {
+                        var emptyRow = document.createElement("tr");
+                        var emptyCell = document.createElement("td");
+                        emptyCell.colSpan = 5;
+                        emptyCell.textContent = "Für dieses Event gibt es keine Anmeldungen.";
+                        emptyRow.appendChild(emptyCell);
+                        body.appendChild(emptyRow);
+                    }
 
-                    var modal = new bootstrap.Modal(
-                        document.getElementById("registrationModal")
-                    );
-
-                    modal.show();
-
+                    document.getElementById("registrationModal").showModal();
+                },
+                error: function (xhr) {
+                    showRequestError(xhr, "Die Eventanmeldungen konnten nicht geladen werden.");
                 }
-
             });
-
         });
 
-
-        //filter Events
         $("#filterEvent").on("click", function () {
-
             var eventTitle = $("#eventTitle").val().trim().toLowerCase();
             var eventDateFrom = $("#eventDateFrom").val();
             var eventDateTo = $("#eventDateTo").val();
             var eventStatus = $("#eventStatus").val();
 
-            console.log(eventDateFrom);
-            console.log(eventDateTo);
+            if (eventDateFrom && eventDateTo && eventDateFrom > eventDateTo) {
+                alert("Das Startdatum darf nicht nach dem Enddatum liegen.");
+                return;
+            }
 
-            $("#tableBody tr").each(function () {
-
+            var visibleEvents = 0;
+            $("#tableBody tr[data-id]").each(function () {
                 var row = $(this);
-
                 var title = row.children().eq(1).text().trim().toLowerCase();
-                var date = row.children().eq(2).text().trim(); // Must be YYYY-MM-DD
-                var status = row.children().eq(6).text().trim();
-
-                var matches = true;
-
-                // Title filter
-                if (eventTitle !== "" && !title.includes(eventTitle)) {
-                    matches = false;
-                }
-
-                // Status filter
-                if (eventStatus !== "" && eventStatus !== "Alle Status" && status !== eventStatus) {
-                    matches = false;
-                }
-
-                // Date From filter
-                if (eventDateFrom !== "" && date < eventDateFrom) {
-                    matches = false;
-                }
-
-                // Date To filter
-                if (eventDateTo !== "" && date > eventDateTo) {
-                    matches = false;
-                }
+                var date = row.children().eq(2).text().trim();
+                var status = row.attr("data-status");
+                var matches = (!eventTitle || title.includes(eventTitle)) &&
+                    (!eventStatus || status === eventStatus) &&
+                    (!eventDateFrom || date >= eventDateFrom) &&
+                    (!eventDateTo || date <= eventDateTo);
 
                 row.toggle(matches);
+                if (matches) {
+                    visibleEvents += 1;
+                }
             });
 
+            $("#eventEmptyState")
+                .prop("hidden", visibleEvents > 0)
+                .children("td")
+                .text(visibleEvents === 0 ? "Keine passenden Events gefunden." : "");
         });
     });
 </script>

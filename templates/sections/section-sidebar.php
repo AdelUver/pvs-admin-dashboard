@@ -112,7 +112,7 @@
 
             <a href="<?= BASE_URL ?>/dashboard">
 
-                <i class="bi bi-speedometer2"></i>
+                <i class="fa-solid fa-gauge-high" aria-hidden="true"></i>
 
                 <span>Dashboard</span>
 
@@ -124,7 +124,7 @@
 
             <a href="<?= BASE_URL ?>/events">
 
-                <i class="bi bi-calendar-event"></i>
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
 
                 <span>Events</span>
 
@@ -136,7 +136,7 @@
 
             <a href="<?= BASE_URL ?>/users">
 
-                <i class="bi bi-people"></i>
+                <i class="fa-solid fa-users" aria-hidden="true"></i>
 
                 <span>Benutzer</span>
 
@@ -148,7 +148,7 @@
 
             <a href="<?= BASE_URL ?>/courses">
 
-                <i class="bi bi-journal-bookmark"></i>
+                <i class="fa-solid fa-book-open" aria-hidden="true"></i>
 
                 <span>Kurse</span>
 
@@ -160,7 +160,7 @@
 
             <a href="<?= BASE_URL ?>/profile">
 
-                <i class="bi bi-person-circle"></i>
+                <i class="fa-solid fa-circle-user" aria-hidden="true"></i>
 
                 <span>Profil</span>
 
@@ -172,7 +172,7 @@
 
             <a href="<?= BASE_URL ?>/settings">
 
-                <i class="bi bi-gear"></i>
+                <i class="fa-solid fa-gear" aria-hidden="true"></i>
 
                 <span>Einstellungen</span>
 
@@ -190,7 +190,7 @@
             <a href="<?= BASE_URL ?>/logout" onclick="return confirm('Möchten Sie sich wirklich abmelden?');">
 
 
-                <i class="bi bi-box-arrow-right"></i>
+                <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
 
                 <span>Logout</span>
 

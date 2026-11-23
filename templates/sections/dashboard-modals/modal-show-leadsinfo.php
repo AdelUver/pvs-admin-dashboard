@@ -19,7 +19,7 @@
         <div class="dashboard-card border-info">
 
             <div class="dashboard-icon text-info">
-                <i class="bi bi-person-lines-fill"></i>
+                <i class="fa-solid fa-address-card" aria-hidden="true"></i>
             </div>
 
             <div class="dashboard-content">

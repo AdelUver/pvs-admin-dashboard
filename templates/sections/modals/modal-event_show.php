@@ -1,17 +1,15 @@
 <!-- Show Event Modal -->
-<div class="modal fade" id="showEventModal" tabindex="-1">
-
-    <div class="modal-dialog modal-lg">
+<dialog class="app-modal modal-lg" id="showEventModal" aria-labelledby="showEventTitle">
 
         <div class="modal-content">
 
             <div class="modal-header">
 
-                <h4 class="modal-title">
+                <h4 class="modal-title" id="showEventTitle">
                     Eventdetails
                 </h4>
 
-                <button class="btn-close" data-bs-dismiss="modal"></button>
+                <button type="button" class="btn-close" data-modal-close aria-label="Schließen"></button>
 
             </div>
 
@@ -129,14 +127,9 @@
 
             <div class="modal-footer">
 
-                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                <button type="button" class="btn btn-secondary" data-modal-close>
                     Schließen
                 </button>
 
             </div>
-
-        </div>
-
-    </div>
-
-</div>
+</dialog>

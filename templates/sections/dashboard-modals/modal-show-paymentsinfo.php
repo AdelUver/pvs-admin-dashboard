@@ -26,7 +26,7 @@ $dashboard = getDashboardData($pdo);
         <div class="dashboard-card border-success">
 
             <div class="dashboard-icon text-success">
-                <i class="bi bi-cash-stack"></i>
+                <i class="fa-solid fa-coins" aria-hidden="true"></i>
             </div>
 
             <div class="dashboard-content">
@@ -47,7 +47,7 @@ $dashboard = getDashboardData($pdo);
         <div class="dashboard-card border-primary">
 
             <div class="dashboard-icon text-primary">
-                <i class="bi bi-graph-up-arrow"></i>
+                <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
             </div>
 
             <div class="dashboard-content">
@@ -68,7 +68,7 @@ $dashboard = getDashboardData($pdo);
         <div class="dashboard-card border-warning">
 
             <div class="dashboard-icon text-warning">
-                <i class="bi bi-credit-card"></i>
+                <i class="fa-solid fa-credit-card" aria-hidden="true"></i>
             </div>
 
             <div class="dashboard-content">
@@ -89,7 +89,7 @@ $dashboard = getDashboardData($pdo);
         <div class="dashboard-card border-danger">
 
             <div class="dashboard-icon text-danger">
-                <i class="bi bi-exclamation-triangle"></i>
+                <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
             </div>
 
             <div class="dashboard-content">

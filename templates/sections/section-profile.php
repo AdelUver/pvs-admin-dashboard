@@ -120,7 +120,7 @@ $profile = getProfile($pdo, $userId);
 
                 <button class="btn btn-primary" name="saveProfile" onclick="return confirm('Möchten Sie wirklich Ihre Daten ändern?');">
 
-                    <i class="bi bi-floppy"></i>
+                    <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
 
                     Änderungen speichern
 
@@ -161,7 +161,7 @@ $profile = getProfile($pdo, $userId);
 
                         <button class="btn btn-success w-100" onclick="return confirm('Möchten Sie Ihre E-Mail ändern?');">
 
-                            <i class="bi bi-envelope-check"></i>
+                            <i class="fa-solid fa-envelope" aria-hidden="true"></i>
 
                             E-Mail ändern
 
@@ -235,7 +235,7 @@ $profile = getProfile($pdo, $userId);
 
                 <button class="btn btn-warning mt-3" onclick="return confirm('Möchten Sie Ihre Password ändern?');">
 
-                    <i class="bi bi-key"></i>
+                    <i class="fa-solid fa-key" aria-hidden="true"></i>
 
                     Passwort ändern
 

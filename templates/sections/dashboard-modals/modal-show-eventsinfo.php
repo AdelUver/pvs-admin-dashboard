@@ -30,7 +30,7 @@ $dashboard = getDashboardData($pdo);
         <div class="dashboard-card border-primary">
 
             <div class="dashboard-icon text-primary">
-                <i class="bi bi-calendar-event"></i>
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
             </div>
 
             <div class="dashboard-content">
@@ -51,7 +51,7 @@ $dashboard = getDashboardData($pdo);
         <div class="dashboard-card border-info">
 
             <div class="dashboard-icon text-info">
-                <i class="bi bi-calendar-check"></i>
+                <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
             </div>
 
             <div class="dashboard-content">
@@ -72,7 +72,7 @@ $dashboard = getDashboardData($pdo);
         <div class="dashboard-card border-success">
 
             <div class="dashboard-icon text-success">
-                <i class="bi bi-people-fill"></i>
+                <i class="fa-solid fa-users" aria-hidden="true"></i>
             </div>
 
             <div class="dashboard-content">
@@ -93,7 +93,7 @@ $dashboard = getDashboardData($pdo);
         <div class="dashboard-card border-secondary">
 
             <div class="dashboard-icon text-secondary">
-                <i class="bi bi-check2-circle"></i>
+                <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
             </div>
 
             <div class="dashboard-content">
@@ -114,7 +114,7 @@ $dashboard = getDashboardData($pdo);
         <div class="dashboard-card border-danger">
 
             <div class="dashboard-icon text-danger">
-                <i class="bi bi-calendar-x"></i>
+                <i class="fa-solid fa-calendar-xmark" aria-hidden="true"></i>
             </div>
 
             <div class="dashboard-content">

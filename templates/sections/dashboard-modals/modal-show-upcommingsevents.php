@@ -25,16 +25,16 @@ $upcomingEvents = getUpcomingEvents($pdo);
 
                 <h5 class="mb-0">
 
-                    <i class="bi bi-calendar-event me-2"></i>
+                    <i class="fa-solid fa-calendar-days me-2" aria-hidden="true"></i>
 
                     Bevorstehende Events
 
                 </h5>
 
-                <a href="/Uver/loginPVS/events#eventsSection"
+                <a href="<?= BASE_URL ?>/events#eventsSection"
                     class="btn btn-outline-primary rounded-pill px-3">
 
-                    <i class="bi bi-arrow-right-circle me-2"></i>
+                    <i class="fa-solid fa-circle-arrow-right me-2" aria-hidden="true"></i>
 
                     Zur Eventverwaltung
 

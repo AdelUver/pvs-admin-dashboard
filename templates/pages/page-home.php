@@ -41,7 +41,7 @@ $currentRoute = in_array($requestedRoute, $sectionRoutes, true) ? $requestedRout
 <!-- Head einbinden -->
 <?php include_once SECTIONS_PATH . '/section-head.php'; ?>
 
-<body>
+<body class="dashboard-ui">
 
     <?php include SECTIONS_PATH . '/section-sidebar.php'; ?>
 

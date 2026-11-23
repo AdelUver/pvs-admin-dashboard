@@ -8,9 +8,10 @@
             $(".modal-title").text("Neuer Benutzer erstellen");
 
             $("#saveUser").html(`
-                        <i class="bi bi-floppy"></i>
+                        <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
                          User speichern
                         `);
+            document.getElementById("userModal").showModal();
         })
 
         //add user
@@ -47,7 +48,7 @@
 
                     if (response.trim() == "success") {
 
-                        window.location.reload();ö
+                        window.location.reload();
 
                     } else {
 
@@ -100,9 +101,7 @@
                     $("#show_updated_at").text(user.updated_at);
                     $("#show_last_login").text(user.last_login_at);
 
-                    new bootstrap.Modal(
-                        document.getElementById("showUserModal")
-                    ).show();
+                    document.getElementById("showUserModal").showModal();
 
                 }
 
@@ -148,12 +147,10 @@
                     $("#userModal .modal-title").text("Benutzer bearbeiten");
 
                     $("#saveUser").html(
-                        '<i class="bi bi-floppy"></i> Änderungen speichern'
+                        '<i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Änderungen speichern'
                     );
 
-                    new bootstrap.Modal(
-                        document.getElementById("userModal")
-                    ).show();
+                    document.getElementById("userModal").showModal();
 
                 }
 
