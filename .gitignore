@@ -3,9 +3,9 @@
 .env.*
 !.env.example
 config/*.local.php
+database.php
 
 # Dependencies and generated output
-/config/database.php
 /vendor/
 /node_modules/
 /build/
