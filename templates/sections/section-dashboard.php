@@ -7,7 +7,6 @@ $pdo = getDB();
 $userId = $_SESSION['userId'];
 
 if (isset($_POST["loadAllEvents"])) {
-
     $upcomingEvents = getUpcomingEvents($pdo, 9999);
     exit();
 }

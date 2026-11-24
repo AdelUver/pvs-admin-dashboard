@@ -1,6 +1,6 @@
 <?php
 $pdo = getDB();
-$dashboard = getDashboardData($pdo);
+// $dashboard = getEventsData($pdo);
 ?>
 
 <div class="row g-4 mt-5">

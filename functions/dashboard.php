@@ -69,7 +69,8 @@ function countNewMembersThisMonth(PDO $pdo): int
     return (int) $stmt->fetchColumn();
 }
 
-function getDashboardData(PDO $pdo): array
+// Zählt alle nicht gelöschte Events && event-status
+function getEventsData(PDO $pdo): array
 {
     // Event-Statistik
     $eventSql = "
@@ -88,39 +89,39 @@ function getDashboardData(PDO $pdo): array
 
     $events = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    // Benutzer-Statistik
-    $userSql = "
-        SELECT
-            COUNT(*) AS users,
-            SUM(role = 'super_admin') AS super_admins,
-            SUM(role = 'admin') AS admins,
-            SUM(role = 'editor') AS editors
-        FROM admin_users
-        WHERE is_active = 1
-    ";
-    $stmt = $pdo->prepare($userSql);
-
-    $stmt->execute();
-
-    $users = $stmt->fetch(PDO::FETCH_ASSOC);
-
     return [
-
         // Events
-        'events' => (int)$events['events'],
-        'planned' => (int)$events['planned'],
-        'full' => (int)$events['full'],
-        'completed' => (int)$events['completed'],
-        'cancelled' => (int)$events['cancelled'],
-
-        // Benutzer
-        'users' => (int)$users['users'],
-        'super_admins' => (int)$users['super_admins'],
-        'admins' => (int)$users['admins'],
-        'editors' => (int)$users['editors']
+        'events' => (int) $events['events'],
+        'planned' => (int) $events['planned'],
+        'full' => (int) $events['full'],
+        'completed' => (int) $events['completed'],
+        'cancelled' => (int) $events['cancelled']
     ];
 }
 
+// Zählt alle Events
+function countAlleEvents(PDO $pdo): int
+{
+    $stmt = $pdo->prepare("
+    SELECT COUNT(*) FROM events"
+    );
+
+    $stmt->execute();
+    return (int) $stmt->fetchColumn();
+}
+
+// Zählt alle gelöschte Events
+function getDeletedEvents(PDO $pdo): int
+{
+    $stmt = $pdo->prepare(
+        "SELECT COUNT(*) FROM events WHERE deleted = 1"
+    );
+
+    $stmt->execute();
+    return (int) $stmt->fetchColumn();
+}
+
+// Zählt alle kommende aktive Events
 function getUpcomingEvents(PDO $pdo, int $limit = 5): array
 {
     $stmt = $pdo->prepare("
@@ -144,3 +145,32 @@ function getUpcomingEvents(PDO $pdo, int $limit = 5): array
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+// Zählt alle aktive Admins && admin-rolle
+function getAdmisData(PDO $pdo): array
+{
+    // Benutzer-Statistik
+    $userSql = "
+        SELECT
+            COUNT(*) AS users,
+            SUM(role = 'super_admin') AS super_admins,
+            SUM(role = 'admin') AS admins,
+            SUM(role = 'editor') AS editors
+        FROM admin_users
+        WHERE is_active = 1
+    ";
+    $stmt = $pdo->prepare($userSql);
+
+    $stmt->execute();
+
+    $users = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return [
+        // Benutzer
+        'users' => (int) $users['users'],
+        'super_admins' => (int) $users['super_admins'],
+        'admins' => (int) $users['admins'],
+        'editors' => (int) $users['editors']
+    ];
+}
+

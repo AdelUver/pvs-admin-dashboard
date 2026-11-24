@@ -102,13 +102,17 @@ $formatUserDate = static function ($value): string {
 
         </h2>
 
-        <button type="button" class="btn btn-primary" id="addUserbtn">
+        <?php if (isSuperAdmin($pdo, $_SESSION['userId'])): ?>
 
-            <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
+            <button type="button" class="btn btn-primary" id="addUserbtn">
 
-            Neuer Benutzer
+                <i class="fa-solid fa-circle-plus" aria-hidden="true"></i>
 
-        </button>
+                Neuer Benutzer
+
+            </button>
+
+        <?php endif; ?>
 
     </div>
 
@@ -173,129 +177,133 @@ $formatUserDate = static function ($value): string {
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
 
-                <thead>
+                    <thead>
 
-                    <tr>
+                        <tr>
 
-                        <th>ID</th>
+                            <th>ID</th>
 
-                        <th>Vorname</th>
+                            <th>Vorname</th>
 
-                        <th>Nachname</th>
+                            <th>Nachname</th>
 
-                        <th>E-Mail</th>
+                            <th>E-Mail</th>
 
-                        <th>Rolle</th>
+                            <th>Rolle</th>
 
-                        <th>Aktiv</th>
+                            <th>Aktiv</th>
 
-                        <th>Angemeldet seit</th>
+                            <th>Angemeldet seit</th>
 
-                        <th>Last login</th>
+                            <th>Last login</th>
 
-                        <th class="text-center">
+                            <th class="text-center">
 
-                            Aktionen
+                                Aktionen
 
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="tableBody">
-
-                    <?php if (!$users): ?>
-                        <tr id="emptyUsersInitial">
-                            <td colspan="9">Keine Benutzer vorhanden.</td>
-                        </tr>
-                    <?php else: ?>
-                        <?php foreach ($users as $user): ?>
-
-
-                        <tr data-id="<?= (int)$user['user_id'] ?>" data-role="<?= htmlspecialchars($user['role']) ?>">
-
-                            <td>
-
-                                <?= $user["user_id"] ?>
-
-                            </td>
-
-                            <td>
-
-                                <?= htmlspecialchars($user["first_name"]) ?>
-
-                            </td>
-
-                            <td>
-
-                                <?= htmlspecialchars($user["last_name"]) ?>
-
-                            </td>
-
-                            <td>
-
-                                <?= htmlspecialchars($user["email"]) ?>
-
-                            </td>
-
-                            <td>
-
-                                <span class="badge bg-primary">
-                                    <?= htmlspecialchars($roleLabels[$user["role"]] ?? $user["role"]) ?>
-                                </span>
-
-                            </td>
-
-                            <td>
-
-                                <?= $user["is_active"] ? 'Ja' : 'Nein' ?>
-
-                            </td>
-
-                            <td>
-
-                                <?= htmlspecialchars($formatUserDate($user["created_at"])) ?>
-
-                            </td>
-
-                            <td>
-
-                                <?= htmlspecialchars($formatUserDate($user["last_login_at"] ?? null)) ?>
-
-                            </td>
-
-                            <td class="text-center">
-
-                                <button type="button" class="btn btn-outline-info btn-sm action-btn showUser" data-id="<?= (int)$user['user_id'] ?>" title="Details anzeigen" aria-label="Details anzeigen">
-
-                                    <i class="fa-solid fa-eye" aria-hidden="true"></i>
-
-                                </button>
-
-                                <button
-                                    class="btn btn-outline-warning btn-sm action-btn updateUser" data-id="<?= (int)$user['user_id'] ?>" title="Benutzer bearbeiten" aria-label="Benutzer bearbeiten">
-                                    <i class="fa-solid fa-pen" aria-hidden="true"></i>
-                                </button>
-
-                                <button
-                                    class="btn btn-outline-danger btn-sm action-btn deleteUser" data-id="<?= (int)$user['user_id'] ?>" title="Benutzer löschen" aria-label="Benutzer löschen">
-                                    <i class="fa-solid fa-trash" aria-hidden="true"></i>
-                                </button>
-
-
-
-                            </td>
+                            </th>
 
                         </tr>
 
-                        <?php endforeach; ?>
-                    <?php endif; ?>
+                    </thead>
 
-                    <tr id="noUsersFound" hidden>
-                        <td colspan="9">Keine Benutzer gefunden.</td>
-                    </tr>
-                </tbody>
+                    <tbody id="tableBody">
+
+                        <?php if (!$users): ?>
+                            <tr id="emptyUsersInitial">
+                                <td colspan="9">Keine Benutzer vorhanden.</td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($users as $user): ?>
+
+
+                                <tr data-id="<?= (int) $user['user_id'] ?>" data-role="<?= htmlspecialchars($user['role']) ?>">
+
+                                    <td>
+
+                                        <?= $user["user_id"] ?>
+
+                                    </td>
+
+                                    <td>
+
+                                        <?= htmlspecialchars($user["first_name"]) ?>
+
+                                    </td>
+
+                                    <td>
+
+                                        <?= htmlspecialchars($user["last_name"]) ?>
+
+                                    </td>
+
+                                    <td>
+
+                                        <?= htmlspecialchars($user["email"]) ?>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span class="badge bg-primary">
+                                            <?= htmlspecialchars($roleLabels[$user["role"]] ?? $user["role"]) ?>
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <?= $user["is_active"] ? 'Ja' : 'Nein' ?>
+
+                                    </td>
+
+                                    <td>
+
+                                        <?= htmlspecialchars($formatUserDate($user["created_at"])) ?>
+
+                                    </td>
+
+                                    <td>
+
+                                        <?= htmlspecialchars($formatUserDate($user["last_login_at"] ?? null)) ?>
+
+                                    </td>
+
+                                    <td class="text-center">
+
+                                        <button type="button" class="btn btn-outline-info btn-sm action-btn showUser"
+                                            data-id="<?= (int) $user['user_id'] ?>" title="Details anzeigen"
+                                            aria-label="Details anzeigen">
+
+                                            <i class="fa-solid fa-eye" aria-hidden="true"></i>
+
+                                        </button>
+
+                                        <button class="btn btn-outline-warning btn-sm action-btn updateUser"
+                                            data-id="<?= (int) $user['user_id'] ?>" title="Benutzer bearbeiten"
+                                            aria-label="Benutzer bearbeiten">
+                                            <i class="fa-solid fa-pen" aria-hidden="true"></i>
+                                        </button>
+
+                                        <button class="btn btn-outline-danger btn-sm action-btn deleteUser"
+                                            data-id="<?= (int) $user['user_id'] ?>" title="Benutzer löschen"
+                                            aria-label="Benutzer löschen">
+                                            <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                                        </button>
+
+
+
+                                    </td>
+
+                                </tr>
+
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+
+                        <tr id="noUsersFound" hidden>
+                            <td colspan="9">Keine Benutzer gefunden.</td>
+                        </tr>
+                    </tbody>
 
                 </table>
             </div>

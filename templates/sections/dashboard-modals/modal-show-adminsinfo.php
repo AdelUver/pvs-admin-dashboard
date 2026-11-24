@@ -1,6 +1,6 @@
 <?php
 $pdo = getDB();
-$dashboard = getDashboardData($pdo);
+$dashboard = getAdmisData($pdo);
 ?>
 
 <div class="row g-4 mt-4">
@@ -12,10 +12,10 @@ $dashboard = getDashboardData($pdo);
 
             <div>
 
-                <h3 class="fw-bold mb-1">Benutzerverwaltung</h3>
+                <h3 class="fw-bold mb-1">Adminverwaltung</h3>
 
                 <p class="text-muted mb-0">
-                    Übersicht über alle registrierten Benutzer und Administratorrollen.
+                    Übersicht über alle registrierten Admins und Administratorrollen.
                 </p>
 
             </div>
@@ -24,7 +24,7 @@ $dashboard = getDashboardData($pdo);
 
     </div>
 
-    <!-- Benutzer gesamt -->
+    <!-- Admins gesamt -->
     <div class="col-xl-3 col-lg-4 col-md-6">
 
         <div class="dashboard-card border-primary">
@@ -35,7 +35,7 @@ $dashboard = getDashboardData($pdo);
 
             <div class="dashboard-content">
 
-                <h6>Benutzer gesamt</h6>
+                <h6>Admins gesamt</h6>
 
                 <h2><?= $dashboard['users'] ?></h2>
 

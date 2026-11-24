@@ -1,3 +1,14 @@
+<?php
+
+require_once FUNCTIONS_PATH . '/events.php';
+require_once FUNCTIONS_PATH . '/function-db.php';
+
+//Daten
+$pdo = getDB();
+$events = getAllEvents($pdo);
+
+?>
+
 <style>
     .page-title {
 
@@ -67,17 +78,7 @@
     }
 </style>
 
-<?php
 
-require_once FUNCTIONS_PATH . '/events.php';
-require_once FUNCTIONS_PATH . '/function-db.php';
-
-
-//Daten
-$pdo = getDB();
-$events = getAllEvents($pdo);
-
-?>
 
 <div class="container-fluid" id="eventsSection">
 

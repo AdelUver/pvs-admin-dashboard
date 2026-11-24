@@ -6,13 +6,13 @@ declare(strict_types=1);
 function validateUserData(array $data): array
 {
     return [
-        'username'   => is_string($data['username'] ?? null) ? trim($data['username']) : '',
-        'email'      => is_string($data['email'] ?? null) ? trim($data['email']) : '',
-        'password'   => is_string($data['password'] ?? null) ? $data['password'] : '',
+        'username' => is_string($data['username'] ?? null) ? trim($data['username']) : '',
+        'email' => is_string($data['email'] ?? null) ? trim($data['email']) : '',
+        'password' => is_string($data['password'] ?? null) ? $data['password'] : '',
         'first_name' => is_string($data['first_name'] ?? null) ? trim($data['first_name']) : '',
-        'last_name'  => is_string($data['last_name'] ?? null) ? trim($data['last_name']) : '',
-        'role'       => is_string($data['role'] ?? null) ? $data['role'] : '',
-        'is_active'  => filter_var($data['is_active'] ?? null, FILTER_VALIDATE_INT)
+        'last_name' => is_string($data['last_name'] ?? null) ? trim($data['last_name']) : '',
+        'role' => is_string($data['role'] ?? null) ? $data['role'] : '',
+        'is_active' => filter_var($data['is_active'] ?? null, FILTER_VALIDATE_INT)
     ];
 }
 
@@ -30,7 +30,7 @@ function userUsernameExists(PDO $pdo, string $username, int $exceptUserId = 0): 
         ':user_id' => $exceptUserId
     ]);
 
-    return (bool)$stmt->fetchColumn();
+    return (bool) $stmt->fetchColumn();
 }
 
 function userEmailExists(PDO $pdo, string $email, int $exceptUserId = 0): bool
@@ -47,7 +47,7 @@ function userEmailExists(PDO $pdo, string $email, int $exceptUserId = 0): bool
         ':user_id' => $exceptUserId
     ]);
 
-    return (bool)$stmt->fetchColumn();
+    return (bool) $stmt->fetchColumn();
 }
 
 //alle user lesen
@@ -71,6 +71,19 @@ function getAllUsers(PDO $pdo): array
     $stmt = $pdo->query($sql);
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function isSuperAdmin(PDO $pdo, int $userID): bool
+{
+    $stmt = $pdo->prepare(
+        "SELECT role FROM admin_users WHERE user_id = :id LIMIT 1"
+    );
+
+    $stmt->execute([':id' => $userID]);
+
+    $role = $stmt->fetchColumn();
+
+    return $role === 'super_admin';
 }
 
 //user anhand id lesen
@@ -131,19 +144,19 @@ function createUser(PDO $pdo, int $createdBy, array $data): int
 
     $stmt->execute([
 
-        ':username'   => $data['username'],
-        ':email'      => $data['email'],
+        ':username' => $data['username'],
+        ':email' => $data['email'],
         ':first_name' => $data['first_name'],
-        ':last_name'  => $data['last_name'],
+        ':last_name' => $data['last_name'],
         ':password_hash' => password_hash($data['password'], PASSWORD_DEFAULT),
-        ':role'       => $data['role'],
-        ':is_active'  => $data['is_active'],
+        ':role' => $data['role'],
+        ':is_active' => $data['is_active'],
         ':created_by' => $createdBy,
         ':updated_by' => $createdBy
 
     ]);
 
-    return (int)$pdo->lastInsertId();
+    return (int) $pdo->lastInsertId();
 }
 
 //user aktulisiern
@@ -167,15 +180,15 @@ function updateUser(PDO $pdo, int $userId, int $updatedBy, array $data): bool
 
         $stmt = $pdo->prepare($sql);
         return $stmt->execute([
-            ':username'   => $data['username'],
-            ':email'      => $data['email'],
+            ':username' => $data['username'],
+            ':email' => $data['email'],
             ':password_hash' => password_hash($data['password'], PASSWORD_DEFAULT),
             ':first_name' => $data['first_name'],
-            ':last_name'  => $data['last_name'],
-            ':role'       => $data['role'],
-            ':is_active'  => $data['is_active'],
+            ':last_name' => $data['last_name'],
+            ':role' => $data['role'],
+            ':is_active' => $data['is_active'],
             ':updated_by' => $updatedBy,
-            ':id'         => $userId
+            ':id' => $userId
         ]);
     }
 
@@ -195,14 +208,14 @@ function updateUser(PDO $pdo, int $userId, int $updatedBy, array $data): bool
 
     $stmt = $pdo->prepare($sql);
     return $stmt->execute([
-        ':username'   => $data['username'],
-        ':email'      => $data['email'],
+        ':username' => $data['username'],
+        ':email' => $data['email'],
         ':first_name' => $data['first_name'],
-        ':last_name'  => $data['last_name'],
-        ':role'       => $data['role'],
-        ':is_active'  => $data['is_active'],
+        ':last_name' => $data['last_name'],
+        ':role' => $data['role'],
+        ':is_active' => $data['is_active'],
         ':updated_by' => $updatedBy,
-        ':id'         => $userId
+        ':id' => $userId
     ]);
 }
 

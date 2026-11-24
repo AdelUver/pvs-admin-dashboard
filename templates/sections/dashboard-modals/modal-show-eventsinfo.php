@@ -1,6 +1,6 @@
 <?php
 $pdo = getDB();
-$dashboard = getDashboardData($pdo);
+$dashboard = getEventsData($pdo);
 ?>
 
 <div class="row g-4 mt-4">
@@ -36,6 +36,26 @@ $dashboard = getDashboardData($pdo);
             <div class="dashboard-content">
 
                 <h6>Events gesamt</h6>
+
+                <h2><?= countAlleEvents($pdo) ?></h2>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Aktive Events -->
+    <div class="col-xl-3 col-lg-4 col-md-6">
+
+        <div class="dashboard-card border-primary">
+
+            <div class="dashboard-icon text-primary">
+                <i class="fa-solid fa-calendar-check text-success" aria-hidden="true"></i>
+            </div>
+
+            <div class="dashboard-content">
+
+                <h6>Aktive Events</h6>
 
                 <h2><?= $dashboard['events'] ?></h2>
 
@@ -93,7 +113,7 @@ $dashboard = getDashboardData($pdo);
         <div class="dashboard-card border-secondary">
 
             <div class="dashboard-icon text-secondary">
-                <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+                <i class="fa-solid fa-circle-check text-success" aria-hidden="true"></i>
             </div>
 
             <div class="dashboard-content">
@@ -122,6 +142,27 @@ $dashboard = getDashboardData($pdo);
                 <h6>Abgesagte Events</h6>
 
                 <h2><?= $dashboard['cancelled'] ?></h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Gelöschte Events -->
+    <div class="col-xl-3 col-lg-4 col-md-6">
+
+        <div class="dashboard-card border-danger">
+
+            <div class="dashboard-icon text-danger">
+                <i class="fa-solid fa-calendar-minus" aria-hidden="true"></i>
+            </div>
+
+            <div class="dashboard-content">
+
+                <h6>Gelöschte Events</h6>
+
+                <h2><?= getDeletedEvents($pdo); ?></h2>
 
             </div>
 
