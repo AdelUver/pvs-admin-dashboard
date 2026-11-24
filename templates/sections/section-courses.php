@@ -1,15 +1,16 @@
 <style>
-.section-title {
+    .courses-section {
+        padding: clamp(1rem, 2.5vw, 2rem);
+    }
 
-    font-size: 30px;
-
-    font-weight: bold;
-
-}
+    .section-title {
+        margin: 0;
+        color: #1f2937;
+        font-size: clamp(1.65rem, 3vw, 2rem);
+        line-height: 1.2;
+    }
 </style>
 
-<h1 class="section-title">
-
-    Kurse
-
-</h1>
+<section class="courses-section" aria-labelledby="coursesTitle">
+    <h1 class="section-title" id="coursesTitle">Kurse</h1>
+</section>

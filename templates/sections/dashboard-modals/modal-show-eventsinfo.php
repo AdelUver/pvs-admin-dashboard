@@ -3,7 +3,7 @@ $pdo = getDB();
 $dashboard = getEventsData($pdo);
 ?>
 
-<div class="row g-4 mt-4">
+<section class="row g-4 mt-4" aria-labelledby="dashboard-events-heading">
 
     <!-- Überschrift -->
     <div class="col-12">
@@ -12,7 +12,7 @@ $dashboard = getEventsData($pdo);
 
             <div>
 
-                <h3 class="fw-bold mb-1">Eventverwaltung</h3>
+                <h2 class="fw-bold mb-1" id="dashboard-events-heading">Eventverwaltung</h2>
 
                 <p class="text-muted mb-0">
                     Übersicht über alle Events und deren aktuellen Status.
@@ -35,9 +35,9 @@ $dashboard = getEventsData($pdo);
 
             <div class="dashboard-content">
 
-                <h6>Events gesamt</h6>
+                <h3>Events gesamt</h3>
 
-                <h2><?= countAlleEvents($pdo) ?></h2>
+                <p class="dashboard-value"><?= countAlleEvents($pdo) ?></p>
 
             </div>
 
@@ -55,9 +55,9 @@ $dashboard = getEventsData($pdo);
 
             <div class="dashboard-content">
 
-                <h6>Aktive Events</h6>
+                <h3>Aktive Events</h3>
 
-                <h2><?= $dashboard['events'] ?></h2>
+                <p class="dashboard-value"><?= $dashboard['events'] ?></p>
 
             </div>
 
@@ -76,9 +76,9 @@ $dashboard = getEventsData($pdo);
 
             <div class="dashboard-content">
 
-                <h6>Geplante Events</h6>
+                <h3>Geplante Events</h3>
 
-                <h2><?= $dashboard['planned'] ?></h2>
+                <p class="dashboard-value"><?= $dashboard['planned'] ?></p>
 
             </div>
 
@@ -97,9 +97,9 @@ $dashboard = getEventsData($pdo);
 
             <div class="dashboard-content">
 
-                <h6>Ausgebuchte Events</h6>
+                <h3>Ausgebuchte Events</h3>
 
-                <h2><?= $dashboard['full'] ?></h2>
+                <p class="dashboard-value"><?= $dashboard['full'] ?></p>
 
             </div>
 
@@ -118,9 +118,9 @@ $dashboard = getEventsData($pdo);
 
             <div class="dashboard-content">
 
-                <h6>Abgeschlossene Events</h6>
+                <h3>Abgeschlossene Events</h3>
 
-                <h2><?= $dashboard['completed'] ?></h2>
+                <p class="dashboard-value"><?= $dashboard['completed'] ?></p>
 
             </div>
 
@@ -139,9 +139,9 @@ $dashboard = getEventsData($pdo);
 
             <div class="dashboard-content">
 
-                <h6>Abgesagte Events</h6>
+                <h3>Abgesagte Events</h3>
 
-                <h2><?= $dashboard['cancelled'] ?></h2>
+                <p class="dashboard-value"><?= $dashboard['cancelled'] ?></p>
 
             </div>
 
@@ -160,9 +160,9 @@ $dashboard = getEventsData($pdo);
 
             <div class="dashboard-content">
 
-                <h6>Gelöschte Events</h6>
+                <h3>Gelöschte Events</h3>
 
-                <h2><?= getDeletedEvents($pdo); ?></h2>
+                <p class="dashboard-value"><?= getDeletedEvents($pdo); ?></p>
 
             </div>
 
@@ -170,4 +170,4 @@ $dashboard = getEventsData($pdo);
 
     </div>
 
-</div>
+</section>

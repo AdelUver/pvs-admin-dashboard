@@ -5,11 +5,11 @@
 
             <div class="modal-header">
 
-                <h4 class="modal-title" id="eventModalTitle">
+                <h2 class="modal-title" id="eventModalTitle">
 
                     Neues Event erstellen
 
-                </h4>
+                </h2>
 
                 <button type="button" class="btn-close" data-modal-close aria-label="Schließen"></button>
 

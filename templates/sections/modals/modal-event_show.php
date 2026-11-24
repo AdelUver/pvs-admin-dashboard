@@ -5,9 +5,9 @@
 
             <div class="modal-header">
 
-                <h4 class="modal-title" id="showEventTitle">
+                <h2 class="modal-title" id="showEventTitle">
                     Eventdetails
-                </h4>
+                </h2>
 
                 <button type="button" class="btn-close" data-modal-close aria-label="Schließen"></button>
 
@@ -22,32 +22,32 @@
                         <table class="table table-sm">
 
                             <tr>
-                                <th>ID</th>
+                                <th scope="row">ID</th>
                                 <td id="show_event_id"></td>
                             </tr>
 
                             <tr>
-                                <th>Titel</th>
+                                <th scope="row">Titel</th>
                                 <td id="show_title"></td>
                             </tr>
 
                             <tr>
-                                <th>Beschreibung</th>
+                                <th scope="row">Beschreibung</th>
                                 <td id="show_description"></td>
                             </tr>
 
                             <tr>
-                                <th>Datum</th>
+                                <th scope="row">Datum</th>
                                 <td id="show_date"></td>
                             </tr>
 
                             <tr>
-                                <th>Uhrzeit</th>
+                                <th scope="row">Uhrzeit</th>
                                 <td id="show_time"></td>
                             </tr>
 
                             <tr>
-                                <th>Status</th>
+                                <th scope="row">Status</th>
                                 <td id="show_status"></td>
                             </tr>
 
@@ -60,32 +60,32 @@
                         <table class="table table-sm">
 
                             <tr>
-                                <th>Ort</th>
+                                <th scope="row">Ort</th>
                                 <td id="show_location"></td>
                             </tr>
 
                             <tr>
-                                <th>Straße</th>
+                                <th scope="row">Straße</th>
                                 <td id="show_street"></td>
                             </tr>
 
                             <tr>
-                                <th>PLZ</th>
+                                <th scope="row">PLZ</th>
                                 <td id="show_postcode"></td>
                             </tr>
 
                             <tr>
-                                <th>Stadt</th>
+                                <th scope="row">Stadt</th>
                                 <td id="show_city"></td>
                             </tr>
 
                             <tr>
-                                <th>Max. Teilnehmer</th>
+                                <th scope="row">Max. Teilnehmer</th>
                                 <td id="show_max"></td>
                             </tr>
 
                             <tr>
-                                <th>Anmeldeschluss</th>
+                                <th scope="row">Anmeldeschluss</th>
                                 <td id="show_deadline"></td>
                             </tr>
 
@@ -97,27 +97,27 @@
 
                 <hr>
 
-                <h5>Systeminformationen</h5>
+                <h3>Systeminformationen</h3>
 
                 <table class="table table-bordered">
 
                     <tr>
-                        <th>Erstellt am</th>
+                        <th scope="row">Erstellt am</th>
                         <td id="show_created_at"></td>
                     </tr>
 
                     <tr>
-                        <th>Erstellt von</th>
+                        <th scope="row">Erstellt von</th>
                         <td id="show_created_by"></td>
                     </tr>
 
                     <tr>
-                        <th>Geändert am</th>
+                        <th scope="row">Geändert am</th>
                         <td id="show_updated_at"></td>
                     </tr>
 
                     <tr>
-                        <th>Geändert von</th>
+                        <th scope="row">Geändert von</th>
                         <td id="show_updated_by"></td>
                     </tr>
 

@@ -92,15 +92,15 @@ $formatUserDate = static function ($value): string {
 };
 ?>
 
-<div class="container-fluid" id="usersSection">
+<section class="container-fluid" id="usersSection" aria-labelledby="usersTitle">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <header class="section-heading">
 
-        <h2 class="page-title">
+        <h1 class="page-title" id="usersTitle">
 
             Benutzer
 
-        </h2>
+        </h1>
 
         <?php if (isSuperAdmin($pdo, $_SESSION['userId'])): ?>
 
@@ -114,34 +114,38 @@ $formatUserDate = static function ($value): string {
 
         <?php endif; ?>
 
-    </div>
+    </header>
 
-    <div class="filter-box">
+    <form class="filter-box" id="userFilterForm" role="search" aria-label="Benutzer filtern">
 
-        <div class="row g-3">
+        <div class="user-filter-grid">
 
-            <div class="col-lg-3">
+            <div>
 
+                <label class="form-label" for="filter-email">E-Mail</label>
                 <input type="text" class="form-control" placeholder="E-Mail suchen..." id="filter-email">
 
             </div>
 
-            <div class="col-lg-3">
+            <div>
 
+                <label class="form-label" for="filter-name">Vorname</label>
                 <input type="text" class="form-control" placeholder="Name suchen..." id="filter-name">
 
             </div>
 
-            <div class="col-lg-3">
+            <div>
 
+                <label class="form-label" for="filter-lastname">Nachname</label>
                 <input type="text" class="form-control" placeholder="Nachname suchen..." id="filter-lastname">
 
             </div>
 
 
 
-            <div class="col-lg-1">
+            <div>
 
+                <label class="form-label" for="filter-userRole">Rolle</label>
                 <select class="form-select" id="filter-userRole">
 
                     <option value="">Alle Rollen</option>
@@ -154,9 +158,9 @@ $formatUserDate = static function ($value): string {
 
             </div>
 
-            <div class="col-lg-1">
+            <div>
 
-                <button class="btn btn-outline-primary w-100" id="filterUser">
+                <button type="submit" class="btn btn-outline-primary w-100" id="filterUser">
 
                     <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
 
@@ -164,40 +168,40 @@ $formatUserDate = static function ($value): string {
 
                 </button>
 
-            </div>
+        </div>
 
         </div>
 
-    </div>
+    </form>
 
     <div class="card user-card">
 
         <div class="card-body">
 
-            <div class="table-responsive">
+            <div class="table-responsive" role="region" aria-label="Benutzerliste" tabindex="0">
                 <table class="table table-hover align-middle">
 
                     <thead>
 
                         <tr>
 
-                            <th>ID</th>
+                            <th scope="col">ID</th>
 
-                            <th>Vorname</th>
+                            <th scope="col">Vorname</th>
 
-                            <th>Nachname</th>
+                            <th scope="col">Nachname</th>
 
-                            <th>E-Mail</th>
+                            <th scope="col">E-Mail</th>
 
-                            <th>Rolle</th>
+                            <th scope="col">Rolle</th>
 
-                            <th>Aktiv</th>
+                            <th scope="col">Aktiv</th>
 
-                            <th>Angemeldet seit</th>
+                            <th scope="col">Angemeldet seit</th>
 
-                            <th>Last login</th>
+                            <th scope="col">Letzter Login</th>
 
-                            <th class="text-center">
+                            <th class="text-center" scope="col">
 
                                 Aktionen
 
@@ -279,13 +283,13 @@ $formatUserDate = static function ($value): string {
 
                                         </button>
 
-                                        <button class="btn btn-outline-warning btn-sm action-btn updateUser"
+                                        <button type="button" class="btn btn-outline-warning btn-sm action-btn updateUser"
                                             data-id="<?= (int) $user['user_id'] ?>" title="Benutzer bearbeiten"
                                             aria-label="Benutzer bearbeiten">
                                             <i class="fa-solid fa-pen" aria-hidden="true"></i>
                                         </button>
 
-                                        <button class="btn btn-outline-danger btn-sm action-btn deleteUser"
+                                        <button type="button" class="btn btn-outline-danger btn-sm action-btn deleteUser"
                                             data-id="<?= (int) $user['user_id'] ?>" title="Benutzer löschen"
                                             aria-label="Benutzer löschen">
                                             <i class="fa-solid fa-trash" aria-hidden="true"></i>
@@ -360,10 +364,8 @@ $formatUserDate = static function ($value): string {
                                     -->
 
         </div>
-
     </div>
-
-</div>
+</section>
 
 <?php require_once MODALS_PATH . '/modal-user_form.php'; ?>
 
@@ -554,7 +556,10 @@ $formatUserDate = static function ($value): string {
             });
         });
 
-        $("#filterUser").on("click", filterUsers);
+        $("#userFilterForm").on("submit", function (event) {
+            event.preventDefault();
+            filterUsers();
+        });
         $("#filter-email, #filter-name, #filter-lastname, #filter-userRole").on("input change", filterUsers);
         filterUsers();
     });

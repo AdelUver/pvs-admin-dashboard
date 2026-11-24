@@ -80,15 +80,15 @@ $events = getAllEvents($pdo);
 
 
 
-<div class="container-fluid" id="eventsSection">
+<section class="container-fluid" id="eventsSection" aria-labelledby="eventsTitle">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <header class="section-heading">
 
-        <h2 class="page-title">
+        <h1 class="page-title" id="eventsTitle">
 
             Events
 
-        </h2>
+        </h1>
 
         <button type="button" class="btn btn-primary" id="addEventButton">
 
@@ -98,32 +98,36 @@ $events = getAllEvents($pdo);
 
         </button>
 
-    </div>
+    </header>
 
-    <div class="filter-box">
+    <form class="filter-box" id="eventFilterForm" role="search" aria-label="Events filtern">
 
         <div class="row g-3">
 
             <div class="col-lg-4">
 
+                <label class="form-label" for="eventTitle">Titel suchen</label>
                 <input type="text" class="form-control" placeholder="Event suchen..." id="eventTitle">
 
             </div>
 
             <div class="col-lg-2">
 
+                <label class="form-label" for="eventDateFrom">Von</label>
                 <input type="date" class="form-control" id="eventDateFrom">
 
             </div>
 
             <div class="col-lg-2">
 
+                <label class="form-label" for="eventDateTo">Bis</label>
                 <input type="date" class="form-control" id="eventDateTo">
 
             </div>
 
             <div class="col-lg-2">
 
+                <label class="form-label" for="eventStatus">Status</label>
                 <select class="form-select" id="eventStatus">
 
                     <option value="">Alle Status</option>
@@ -138,7 +142,7 @@ $events = getAllEvents($pdo);
 
             <div class="col-lg-2">
 
-                <button type="button" class="btn btn-outline-primary w-100" id="filterEvent">
+                <button type="submit" class="btn btn-outline-primary w-100" id="filterEvent">
 
                     <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
 
@@ -146,38 +150,38 @@ $events = getAllEvents($pdo);
 
                 </button>
 
-            </div>
+        </div>
 
         </div>
 
-    </div>
+    </form>
 
     <div class="card event-card">
 
         <div class="card-body">
 
-            <div class="table-responsive">
+            <div class="table-responsive" role="region" aria-label="Eventliste" tabindex="0">
                 <table class="table table-hover align-middle">
 
                 <thead>
 
                     <tr>
 
-                        <th>ID</th>
+                        <th scope="col">ID</th>
 
-                        <th>Titel</th>
+                        <th scope="col">Titel</th>
 
-                        <th>Datum</th>
+                        <th scope="col">Datum</th>
 
-                        <th>Uhrzeit</th>
+                        <th scope="col">Uhrzeit</th>
 
-                        <th>Ort</th>
+                        <th scope="col">Ort</th>
 
-                        <th>Max. Teilnehmer</th>
+                        <th scope="col">Max. Teilnehmer</th>
 
-                        <th>Status</th>
+                        <th scope="col">Status</th>
 
-                        <th class="text-center">
+                        <th class="text-center" scope="col">
 
                             Aktionen
 
@@ -367,10 +371,8 @@ $events = getAllEvents($pdo);
                                     -->
 
         </div>
-
     </div>
-
-</div>
+</section>
 
 <script>
     const eventEndpoint = <?= json_encode(BACKEND_URL . '/backend-events.php', JSON_UNESCAPED_SLASHES) ?>;
@@ -614,7 +616,8 @@ $events = getAllEvents($pdo);
             });
         });
 
-        $("#filterEvent").on("click", function () {
+        $("#eventFilterForm").on("submit", function (event) {
+            event.preventDefault();
             var eventTitle = $("#eventTitle").val().trim().toLowerCase();
             var eventDateFrom = $("#eventDateFrom").val();
             var eventDateTo = $("#eventDateTo").val();

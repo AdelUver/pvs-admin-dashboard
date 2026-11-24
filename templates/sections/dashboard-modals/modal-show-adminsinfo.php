@@ -3,7 +3,7 @@ $pdo = getDB();
 $dashboard = getAdmisData($pdo);
 ?>
 
-<div class="row g-4 mt-4">
+<section class="row g-4 mt-4" aria-labelledby="dashboard-admins-heading">
 
     <!-- Überschrift -->
     <div class="col-12">
@@ -12,7 +12,7 @@ $dashboard = getAdmisData($pdo);
 
             <div>
 
-                <h3 class="fw-bold mb-1">Adminverwaltung</h3>
+                <h2 class="fw-bold mb-1" id="dashboard-admins-heading">Adminverwaltung</h2>
 
                 <p class="text-muted mb-0">
                     Übersicht über alle registrierten Admins und Administratorrollen.
@@ -35,9 +35,9 @@ $dashboard = getAdmisData($pdo);
 
             <div class="dashboard-content">
 
-                <h6>Admins gesamt</h6>
+                <h3>Admins gesamt</h3>
 
-                <h2><?= $dashboard['users'] ?></h2>
+                <p class="dashboard-value"><?= $dashboard['users'] ?></p>
 
             </div>
 
@@ -56,9 +56,9 @@ $dashboard = getAdmisData($pdo);
 
             <div class="dashboard-content">
 
-                <h6>Super Admins</h6>
+                <h3>Super Admins</h3>
 
-                <h2><?= $dashboard['super_admins'] ?></h2>
+                <p class="dashboard-value"><?= $dashboard['super_admins'] ?></p>
 
             </div>
 
@@ -77,9 +77,9 @@ $dashboard = getAdmisData($pdo);
 
             <div class="dashboard-content">
 
-                <h6>Administratoren</h6>
+                <h3>Administratoren</h3>
 
-                <h2><?= $dashboard['admins'] ?></h2>
+                <p class="dashboard-value"><?= $dashboard['admins'] ?></p>
 
             </div>
 
@@ -98,9 +98,9 @@ $dashboard = getAdmisData($pdo);
 
             <div class="dashboard-content">
 
-                <h6>Editoren</h6>
+                <h3>Editoren</h3>
 
-                <h2><?= $dashboard['editors'] ?></h2>
+                <p class="dashboard-value"><?= $dashboard['editors'] ?></p>
 
             </div>
 
@@ -108,4 +108,4 @@ $dashboard = getAdmisData($pdo);
 
     </div>
 
-</div>
+</section>

@@ -4,9 +4,9 @@
 
             <div class="modal-header">
 
-                <h4 class="modal-title" id="userModalTitle">
+                <h2 class="modal-title" id="userModalTitle">
                     Benutzer hinzufügen
-                </h4>
+                </h2>
 
                 <button type="button" class="btn-close" data-modal-close aria-label="Schließen"></button>
 
@@ -21,27 +21,27 @@
                     <div class="row">
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Vorname</label>
+                            <label class="form-label" for="first_name">Vorname</label>
                             <input type="text" class="form-control" id="first_name" name="first_name" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Nachname</label>
+                            <label class="form-label" for="last_name">Nachname</label>
                             <input type="text" class="form-control" id="last_name" name="last_name" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Benutzername</label>
+                            <label class="form-label" for="username">Benutzername</label>
                             <input type="text" class="form-control" id="username" name="username" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">E-Mail</label>
+                            <label class="form-label" for="email">E-Mail</label>
                             <input type="email" class="form-control" id="email" name="email" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Passwort</label>
+                            <label class="form-label" for="password">Passwort</label>
                             <input type="password" class="form-control" id="password" name="password" minlength="3" autocomplete="new-password">
                             <small class="text-muted" id="userPasswordHelp">
                                 Leer lassen, wenn das Passwort nicht geändert werden soll.
@@ -49,7 +49,7 @@
                         </div>
 
                         <div class="col-md-3 mb-3">
-                            <label class="form-label">Rolle</label>
+                            <label class="form-label" for="role">Rolle</label>
 
                             <select class="form-select" id="role" name="role">
 
@@ -64,7 +64,7 @@
 
                         <div class="col-md-3 mb-3">
 
-                            <label class="form-label">Aktiv</label>
+                            <label class="form-label" for="is_active">Aktiv</label>
 
                             <select class="form-select" id="is_active" name="is_active">
 

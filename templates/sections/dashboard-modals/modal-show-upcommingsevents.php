@@ -4,12 +4,12 @@ $upcomingEvents = getUpcomingEvents($pdo);
 
 ?>
 
-<div class="row mt-5">
+<section class="row mt-5" aria-labelledby="dashboard-upcoming-heading">
 
     <!-- Überschrift -->
     <div class="col-12 mb-4">
 
-        <h3 class="fw-bold mb-1">Bevorstehende Events</h3>
+        <h2 class="fw-bold mb-1" id="dashboard-upcoming-heading">Bevorstehende Events</h2>
 
         <p class="text-muted mb-0">
             Übersicht der nächsten geplanten Veranstaltungen.
@@ -23,13 +23,13 @@ $upcomingEvents = getUpcomingEvents($pdo);
 
             <div class="card-header d-flex justify-content-between align-items-center">
 
-                <h5 class="mb-0">
+                <h3 class="mb-0">
 
                     <i class="fa-solid fa-calendar-days me-2" aria-hidden="true"></i>
 
                     Bevorstehende Events
 
-                </h5>
+                </h3>
 
                 <a href="<?= BASE_URL ?>/events#eventsSection"
                     class="btn btn-outline-primary rounded-pill px-3">
@@ -44,7 +44,7 @@ $upcomingEvents = getUpcomingEvents($pdo);
 
             <div class="card-body p-0">
 
-                <div class="table-responsive">
+                <div class="table-responsive" role="region" aria-label="Bevorstehende Events" tabindex="0">
 
                     <table class="table table-hover align-middle mb-0">
 
@@ -52,12 +52,12 @@ $upcomingEvents = getUpcomingEvents($pdo);
 
                             <tr>
 
-                                <th>Event-ID</th>
-                                <th>Veranstaltung</th>
-                                <th>Datum</th>
-                                <th>Uhrzeit</th>
-                                <th>Ort</th>
-                                <th>Status</th>
+                                <th scope="col">Event-ID</th>
+                                <th scope="col">Veranstaltung</th>
+                                <th scope="col">Datum</th>
+                                <th scope="col">Uhrzeit</th>
+                                <th scope="col">Ort</th>
+                                <th scope="col">Status</th>
 
                             </tr>
 
@@ -122,4 +122,4 @@ $upcomingEvents = getUpcomingEvents($pdo);
 
     </div>
 
-</div>
+</section>

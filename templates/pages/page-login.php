@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="de">
 
-<!-- Head einbinden -->
-<?php include_once SECTIONS_PATH . '/section-head.php'; ?>
+<head>
+    <?php include_once SECTIONS_PATH . '/section-head.php'; ?>
+</head>
 
 <body class="login-page">
     <!-- login Section einbinden -->

@@ -3,14 +3,14 @@ $pdo = getDB();
 // $dashboard = getEventsData($pdo);
 ?>
 
-<div class="row g-4 mt-5">
+<section class="row g-4 mt-5" aria-labelledby="dashboard-members-heading">
 
     <!-- Überschrift -->
     <div class="col-12">
 
         <div class="mb-4">
 
-            <h3 class="fw-bold mb-1">Mitglieder</h3>
+            <h2 class="fw-bold mb-1" id="dashboard-members-heading">Mitglieder</h2>
 
             <p class="text-muted mb-0">
                 Übersicht über den aktuellen Mitgliederbestand und dessen Entwicklung.
@@ -31,9 +31,9 @@ $pdo = getDB();
 
             <div class="dashboard-content">
 
-                <h6>Aktive Mitglieder</h6>
+                <h3>Aktive Mitglieder</h3>
 
-                <h2><?=  countActiveMembers($pdo) ?></h2>
+                <p class="dashboard-value"><?= countActiveMembers($pdo) ?></p>
 
             </div>
 
@@ -52,9 +52,9 @@ $pdo = getDB();
 
             <div class="dashboard-content">
 
-                <h6>Gesperrte Mitglieder</h6>
+                <h3>Gesperrte Mitglieder</h3>
 
-                <h2><?= countBlockedMembers($pdo) ?></h2>
+                <p class="dashboard-value"><?= countBlockedMembers($pdo) ?></p>
 
             </div>
 
@@ -73,9 +73,9 @@ $pdo = getDB();
 
             <div class="dashboard-content">
 
-                <h6>Neue Mitglieder (diesen Monat)</h6>
+                <h3>Neue Mitglieder (diesen Monat)</h3>
 
-                <h2><?= countNewMembersThisMonth($pdo) ?></h2>
+                <p class="dashboard-value"><?= countNewMembersThisMonth($pdo) ?></p>
 
             </div>
 
@@ -83,4 +83,4 @@ $pdo = getDB();
 
     </div>
 
-</div>
+</section>

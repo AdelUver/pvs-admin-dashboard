@@ -4,11 +4,11 @@
 
             <div class="modal-header">
 
-                <h4 class="modal-title" id="showUserTitle">
+                <h2 class="modal-title" id="showUserTitle">
 
                     Benutzerdetails
 
-                </h4>
+                </h2>
 
                 <button type="button" class="btn-close" data-modal-close aria-label="Schließen"></button>
 
@@ -19,52 +19,52 @@
                 <table class="table table-striped">
 
                     <tr>
-                        <th>ID</th>
+                        <th scope="row">ID</th>
                         <td id="show_user_id"></td>
                     </tr>
 
                     <tr>
-                        <th>Vorname</th>
+                        <th scope="row">Vorname</th>
                         <td id="show_first_name"></td>
                     </tr>
 
                     <tr>
-                        <th>Nachname</th>
+                        <th scope="row">Nachname</th>
                         <td id="show_last_name"></td>
                     </tr>
 
                     <tr>
-                        <th>Benutzername</th>
+                        <th scope="row">Benutzername</th>
                         <td id="show_username"></td>
                     </tr>
 
                     <tr>
-                        <th>E-Mail</th>
+                        <th scope="row">E-Mail</th>
                         <td id="show_email"></td>
                     </tr>
 
                     <tr>
-                        <th>Rolle</th>
+                        <th scope="row">Rolle</th>
                         <td id="show_role"></td>
                     </tr>
 
                     <tr>
-                        <th>Aktiv</th>
+                        <th scope="row">Aktiv</th>
                         <td id="show_active"></td>
                     </tr>
 
                     <tr>
-                        <th>Erstellt am</th>
+                        <th scope="row">Erstellt am</th>
                         <td id="show_created_at"></td>
                     </tr>
 
                     <tr>
-                        <th>Geändert am</th>
+                        <th scope="row">Geändert am</th>
                         <td id="show_updated_at"></td>
                     </tr>
 
                     <tr>
-                        <th>Letzter Login</th>
+                        <th scope="row">Letzter Login</th>
                         <td id="show_last_login"></td>
                     </tr>
 

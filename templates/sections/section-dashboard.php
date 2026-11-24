@@ -23,20 +23,6 @@ $upcomingEvents = getUpcomingEvents($pdo);
 
 
 <style>
-    .page-title {
-
-        font-size: 30px;
-        font-weight: 700;
-        color: #1f2937;
-
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        height: 100px;
-        width: 100px;
-
-    }
-
     .dashboard-card {
         background: #fff;
         border-left: 5px solid;
@@ -65,7 +51,7 @@ $upcomingEvents = getUpcomingEvents($pdo);
         flex: 1;
     }
 
-    .dashboard-content h6 {
+    .dashboard-content h3 {
         margin: 0;
         color: #6c757d;
         font-size: .9rem;
@@ -74,7 +60,7 @@ $upcomingEvents = getUpcomingEvents($pdo);
         letter-spacing: .5px;
     }
 
-    .dashboard-content h2 {
+    .dashboard-content .dashboard-value {
         margin-top: 8px;
         margin-bottom: 0;
         font-size: 2.2rem;
@@ -93,7 +79,7 @@ $upcomingEvents = getUpcomingEvents($pdo);
             width: 60px;
         }
 
-        .dashboard-content h2 {
+        .dashboard-content .dashboard-value {
             font-size: 1.8rem;
         }
 
@@ -102,9 +88,9 @@ $upcomingEvents = getUpcomingEvents($pdo);
 
 
 
-<!-- <h2 class="page-title">
-    Dashboard
-</h2> -->
+<header class="section-heading">
+    <h1 class="page-title">Dashboard</h1>
+</header>
 
 
 <!-- Show Events info -->

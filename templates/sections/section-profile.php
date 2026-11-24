@@ -67,23 +67,23 @@ if (!is_string($lastLogin) || $lastLogin === '' || strncmp($lastLogin, '0000-00-
 </style>
 
 
-<div class="container-fluid">
+<section class="container-fluid profile-section" aria-labelledby="profileTitle">
 
-    <h2 class="profile-title">
+    <h1 class="profile-title" id="profileTitle">
 
         Mein Profil
 
-    </h2>
+    </h1>
 
     <!-- Persönliche Daten -->
 
-    <div class="card profile-card">
+    <section class="card profile-card" aria-labelledby="personalDataTitle">
 
-        <div class="card-header">
+        <h2 class="card-header profile-card__title" id="personalDataTitle">
 
             Persönliche Daten
 
-        </div>
+        </h2>
 
         <div class="card-body">
 
@@ -95,39 +95,39 @@ if (!is_string($lastLogin) || $lastLogin === '' || strncmp($lastLogin, '0000-00-
 
                     <div class="col-md-6 mb-3">
 
-                        <label class="form-label">
+                        <label class="form-label" for="profile-first-name">
 
                             Vorname
 
                         </label>
 
-                        <input class="form-control" name="first_name" required
+                        <input class="form-control" id="profile-first-name" name="first_name" required
                             value="<?= htmlspecialchars($profile["first_name"]) ?>">
 
                     </div>
 
                     <div class="col-md-6 mb-3">
 
-                        <label class="form-label">
+                        <label class="form-label" for="profile-last-name">
 
                             Nachname
 
                         </label>
 
-                        <input class="form-control" name="last_name" required
+                        <input class="form-control" id="profile-last-name" name="last_name" required
                             value="<?= htmlspecialchars($profile["last_name"]) ?>">
 
                     </div>
 
                     <div class="col-md-6 mb-3">
 
-                        <label class="form-label">
+                        <label class="form-label" for="profile-username">
 
                             Benutzername
 
                         </label>
 
-                        <input class="form-control" name="username" required
+                        <input class="form-control" id="profile-username" name="username" required
                             value="<?= htmlspecialchars($profile["username"]) ?>">
 
                     </div>
@@ -146,17 +146,17 @@ if (!is_string($lastLogin) || $lastLogin === '' || strncmp($lastLogin, '0000-00-
 
         </div>
 
-    </div>
+    </section>
 
     <!-- E-Mail -->
 
-    <div class="card profile-card">
+    <section class="card profile-card" aria-labelledby="emailTitle">
 
-        <div class="card-header">
+        <h2 class="card-header profile-card__title" id="emailTitle">
 
             E-Mail-Adresse
 
-        </div>
+        </h2>
 
         <div class="card-body">
 
@@ -168,7 +168,8 @@ if (!is_string($lastLogin) || $lastLogin === '' || strncmp($lastLogin, '0000-00-
 
                     <div class="col-lg-8">
 
-                        <input type="email" class="form-control" name="email" required
+                        <label class="form-label" for="profile-email">E-Mail-Adresse</label>
+                        <input type="email" class="form-control" id="profile-email" name="email" required
                             value="<?= htmlspecialchars($profile["email"]) ?>">
 
                     </div>
@@ -191,17 +192,17 @@ if (!is_string($lastLogin) || $lastLogin === '' || strncmp($lastLogin, '0000-00-
 
         </div>
 
-    </div>
+    </section>
 
     <!-- Passwort -->
 
-    <div class="card profile-card">
+    <section class="card profile-card" aria-labelledby="passwordTitle">
 
-        <div class="card-header">
+        <h2 class="card-header profile-card__title" id="passwordTitle">
 
             Passwort ändern
 
-        </div>
+        </h2>
 
         <div class="card-body">
 
@@ -213,37 +214,37 @@ if (!is_string($lastLogin) || $lastLogin === '' || strncmp($lastLogin, '0000-00-
 
                     <div class="col-md-4">
 
-                        <label>
+                        <label class="form-label" for="current-password">
 
                             Aktuelles Passwort
 
                         </label>
 
-                        <input type="password" name="current_password" class="form-control" autocomplete="current-password" required>
+                        <input type="password" id="current-password" name="current_password" class="form-control" autocomplete="current-password" required>
 
                     </div>
 
                     <div class="col-md-4">
 
-                        <label>
+                        <label class="form-label" for="new-password">
 
                             Neues Passwort
 
                         </label>
 
-                        <input type="password" name="new_password" class="form-control" autocomplete="new-password" minlength="3" required>
+                        <input type="password" id="new-password" name="new_password" class="form-control" autocomplete="new-password" minlength="3" required>
 
                     </div>
 
                     <div class="col-md-4">
 
-                        <label>
+                        <label class="form-label" for="repeat-password">
 
                             Passwort wiederholen
 
                         </label>
 
-                        <input type="password" name="repeat_password" class="form-control" autocomplete="new-password" minlength="3" required>
+                        <input type="password" id="repeat-password" name="repeat_password" class="form-control" autocomplete="new-password" minlength="3" required>
 
                     </div>
 
@@ -261,111 +262,117 @@ if (!is_string($lastLogin) || $lastLogin === '' || strncmp($lastLogin, '0000-00-
 
         </div>
 
-    </div>
+    </section>
 
     <!-- Kontoinformation -->
 
-    <div class="card profile-card">
+    <section class="card profile-card" aria-labelledby="accountInfoTitle">
 
-        <div class="card-header">
+        <h2 class="card-header profile-card__title" id="accountInfoTitle">
 
             Kontoinformationen
 
-        </div>
+        </h2>
 
         <div class="card-body">
 
-            <table class="table">
+            <div class="table-responsive" role="region" aria-label="Kontoinformationen" tabindex="0">
+                <table class="table profile-info-table">
+                    <tbody>
 
-                <tr>
+                        <tr>
 
-                    <th width="250">
+                            <th scope="row">
 
-                        Rolle
+                                Rolle
 
-                    </th>
+                            </th>
 
-                    <td>
+                            <td>
 
-                        <span class="badge bg-primary badge-role">
+                                <span class="badge bg-primary badge-role">
 
-                            <?= htmlspecialchars($roleLabels[$profile["role"]] ?? $profile["role"]) ?>
+                                    <?= htmlspecialchars($roleLabels[$profile["role"]] ?? $profile["role"]) ?>
 
-                        </span>
+                                </span>
 
-                    </td>
+                            </td>
 
-                </tr>
+                        </tr>
 
-                <tr>
+                        <tr>
 
-                    <th>
+                            <th scope="row">
 
-                        Status
+                                Status
 
-                    </th>
+                            </th>
 
-                    <td>
+                            <td>
 
-                        <?php if ($profile["is_active"]): ?>
+                                <?php if ($profile["is_active"]): ?>
 
-                            <span class="badge bg-success">
+                                    <span class="badge bg-success">
 
-                                Aktiv
+                                        Aktiv
 
-                            </span>
+                                    </span>
 
-                        <?php else: ?>
+                                <?php else: ?>
 
-                            <span class="badge bg-danger">
+                                    <span class="badge bg-danger">
 
-                                Deaktiviert
+                                        Deaktiviert
 
-                            </span>
+                                    </span>
 
-                        <?php endif; ?>
+                                <?php endif; ?>
 
-                    </td>
+                            </td>
 
-                </tr>
+                        </tr>
 
-                <tr>
+                        <tr>
 
-                    <th>
+                            <th scope="row">
 
-                        Konto erstellt
+                                Konto erstellt
 
-                    </th>
+                            </th>
 
-                    <td>
+                            <td>
 
-                        <?= htmlspecialchars($profile["created_at"]) ?>
+                                <?= htmlspecialchars($profile["created_at"]) ?>
 
-                    </td>
+                            </td>
 
-                </tr>
+                        </tr>
 
-                <tr>
+                        <tr>
 
-                    <th>
+                            <th scope="row">
 
-                        Letzter Login
+                                Letzter Login
 
-                    </th>
+                            </th>
 
-                    <td>
+                            <td>
 
-                        <?= htmlspecialchars($lastLogin) ?>
+                                <?= htmlspecialchars($lastLogin) ?>
 
-                    </td>
+                            </td>
 
-                </tr>
+                        </tr>
 
-            </table>
+                    </tbody>
+                </table>
+            </div>
 
         </div>
 
-    </div>
+    </section>
+
+    </section>
 
 </div>
 

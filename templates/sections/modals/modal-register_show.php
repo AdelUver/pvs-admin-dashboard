@@ -5,11 +5,11 @@
 
             <div class="modal-header">
 
-                <h4 class="modal-title" id="registrationTitle">
+                <h2 class="modal-title" id="registrationTitle">
 
                     Eventanmeldungen
 
-                </h4>
+                </h2>
 
                 <button type="button" class="btn-close" data-modal-close aria-label="Schließen"></button>
 
@@ -17,17 +17,18 @@
 
             <div class="modal-body">
 
+                <div class="table-responsive" role="region" aria-label="Anmeldungen" tabindex="0">
                 <table class="table table-hover">
 
                     <thead>
 
                         <tr>
 
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>E-Mail</th>
-                            <th>Status</th>
-                            <th>Angemeldet am</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">E-Mail</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Angemeldet am</th>
 
                         </tr>
 
@@ -38,6 +39,7 @@
                     </tbody>
 
                 </table>
+                </div>
 
             </div>
     </dialog>

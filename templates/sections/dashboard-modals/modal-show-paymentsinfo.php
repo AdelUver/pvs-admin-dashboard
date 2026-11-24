@@ -3,14 +3,14 @@ $pdo = getDB();
 $dashboard = getEventsData($pdo);
 ?>
 
-<div class="row g-4 mt-5">
+<section class="row g-4 mt-5" aria-labelledby="dashboard-payments-heading">
 
     <!-- Überschrift -->
     <div class="col-12">
 
         <div class="mb-4">
 
-            <h3 class="fw-bold mb-1">Finanzen & Zahlungen</h3>
+            <h2 class="fw-bold mb-1" id="dashboard-payments-heading">Finanzen & Zahlungen</h2>
 
             <p class="text-muted mb-0">
                 Übersicht über Umsätze, offene Zahlungen und den aktuellen Zahlungsstatus.
@@ -31,9 +31,9 @@ $dashboard = getEventsData($pdo);
 
             <div class="dashboard-content">
 
-                <h6>Monatlicher Umsatz</h6>
+                <h3>Monatlicher Umsatz</h3>
 
-                <h2>Monatlicher Umsatz</h2>
+                <p class="dashboard-value">Monatlicher Umsatz</p>
 
             </div>
 
@@ -52,9 +52,9 @@ $dashboard = getEventsData($pdo);
 
             <div class="dashboard-content">
 
-                <h6>Jährlicher Umsatz</h6>
+                <h3>Jährlicher Umsatz</h3>
 
-                <h2>Jährlicher Umsatz</h2>
+                <p class="dashboard-value">Jährlicher Umsatz</p>
 
             </div>
 
@@ -73,9 +73,9 @@ $dashboard = getEventsData($pdo);
 
             <div class="dashboard-content">
 
-                <h6>Offene Zahlungen</h6>
+                <h3>Offene Zahlungen</h3>
 
-                <h2>Offene Zahlungen</h2>
+                <p class="dashboard-value">Offene Zahlungen</p>
 
             </div>
 
@@ -94,9 +94,9 @@ $dashboard = getEventsData($pdo);
 
             <div class="dashboard-content">
 
-                <h6>Zahlungsausfälle</h6>
+                <h3>Zahlungsausfälle</h3>
 
-                <h2>Zahlungsausfälle</h2>
+                <p class="dashboard-value">Zahlungsausfälle</p>
 
             </div>
 
@@ -104,4 +104,4 @@ $dashboard = getEventsData($pdo);
 
     </div>
 
-</div>
+</section>

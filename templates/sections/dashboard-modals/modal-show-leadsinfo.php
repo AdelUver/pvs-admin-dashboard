@@ -1,10 +1,10 @@
-<div class="row mt-5">
+<section class="row mt-5" aria-labelledby="dashboard-leads-heading">
 
     <div class="col-12">
 
         <div class="mb-4">
 
-            <h3 class="fw-bold mb-1">Leads</h3>
+            <h2 class="fw-bold mb-1" id="dashboard-leads-heading">Leads</h2>
 
             <p class="text-muted mb-0">
                 Übersicht über neue Interessenten und potenzielle Mitglieder.
@@ -24,7 +24,7 @@
 
             <div class="dashboard-content">
 
-                <h5 class="fw-bold mb-2">Lead-Management</h5>
+                <h3 class="fw-bold mb-2">Lead-Management</h3>
 
                 <p class="text-muted mb-0">
                     In diesem Bereich werden künftig neue Leads, Kontaktanfragen,
@@ -37,4 +37,4 @@
 
     </div>
 
-</div>
+</section>
