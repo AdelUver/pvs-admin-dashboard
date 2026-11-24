@@ -48,6 +48,7 @@ $currentRoute = in_array($requestedRoute, $sectionRoutes, true) ? $requestedRout
 <html lang="de">
 
 <!-- Head einbinden -->
+<?php $includeAppStyles = true; ?>
 <?php include_once SECTIONS_PATH . '/section-head.php'; ?>
 
 <body class="dashboard-ui">

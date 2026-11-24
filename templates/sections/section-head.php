@@ -4,10 +4,11 @@
     <title>Private Value Society – Finanzwissen. Netzwerk. Zukunft.</title>
     <meta name="description"
         content="Private Value Society – exklusive Community für Finanzbildung, starke Kontakte und reale Events.">
-   
 
     <link rel="stylesheet" href="<?= CSS_URL ?>/root.css">
-    <link rel="stylesheet" href="<?= CSS_URL ?>/app.css">
+    <?php if (!empty($includeAppStyles)): ?>
+        <link rel="stylesheet" href="<?= CSS_URL ?>/app.css?v=<?= filemtime(CSS_PATH . '/app.css') ?>">
+    <?php endif; ?>
     <script src="<?= JS_URL ?>/app.js" defer></script>
     <link rel="icon" href="<?= IMAGES_URL ?>/logo/pvs_logo.png" type="image/png">
 
