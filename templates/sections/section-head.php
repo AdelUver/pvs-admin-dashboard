@@ -1,6 +1,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Private Value Society – Finanzwissen. Netzwerk. Zukunft.</title>
+<title>Admin.Private Value Society</title>
 <meta name="description"
     content="Private Value Society – exklusive Community für Finanzbildung, starke Kontakte und reale Events.">
 
