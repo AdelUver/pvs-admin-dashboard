@@ -128,10 +128,22 @@ function getEventParticipants(PDO $pdo, int $eventId): array
 //$_POST validieren
 function validateData(array $input): array
 {
+    $validateTextLength = static function (string $value, string $field): void {
+        $characterCount = preg_match_all('/./us', $value, $matches);
+        if ($characterCount === false) {
+            throw new InvalidArgumentException('Das Feld "' . $field . '" enthält ungültige Zeichen.');
+        }
+
+        if ($characterCount > 255) {
+            throw new InvalidArgumentException('Das Feld "' . $field . '" darf höchstens 255 Zeichen enthalten.');
+        }
+    };
+
     $title = trim($input['title'] ?? '');
     if ($title === '') {
         throw new InvalidArgumentException('Bitte einen Eventtitel eingeben.');
     }
+    $validateTextLength($title, 'Eventtitel');
 
     $allowedStatus = ['planned', 'full', 'completed', 'cancelled'];
     $status = $input['status'] ?? 'planned';
@@ -140,6 +152,7 @@ function validateData(array $input): array
     }
 
     $description = trim($input['description'] ?? '');
+    $validateTextLength($description, 'Beschreibung');
     $date = trim($input['event_date'] ?? '');
     $dateObj = DateTimeImmutable::createFromFormat('!Y-m-d', $date);
     $dateErrors = DateTimeImmutable::getLastErrors();
@@ -166,14 +179,16 @@ function validateData(array $input): array
     if ($location === '') {
         throw new InvalidArgumentException('Bitte einen Ort eingeben.');
     }
+    $validateTextLength($location, 'Ort');
 
     $street = trim($input['street'] ?? '');
     if ($street === '') {
         throw new InvalidArgumentException('Bitte eine Straße eingeben.');
     }
+    $validateTextLength($street, 'Straße');
 
     $postCode = trim($input['post_code'] ?? '');
-    if (preg_match('/^\d{4,5}$/D', $postCode) !== 1) {
+    if (preg_match('/^\d{4,5}$/D', $postCode) !== 1 || (int) $postCode > 32767) {
         throw new InvalidArgumentException('Bitte eine gültige Postleitzahl eingeben.');
     }
 
@@ -181,10 +196,16 @@ function validateData(array $input): array
     if ($city === '') {
         throw new InvalidArgumentException('Bitte eine Stadt eingeben.');
     }
+    $validateTextLength($city, 'Stadt');
 
     $maxParticipants = filter_var($input['max_participants'] ?? null, FILTER_VALIDATE_INT);
-    if ($maxParticipants === false || $maxParticipants < 1) {
+    if ($maxParticipants === false || $maxParticipants < 1 || $maxParticipants > 2147483647) {
         throw new InvalidArgumentException('Die maximale Teilnehmerzahl muss eine positive ganze Zahl sein.');
+    }
+
+    $minParticipants = filter_var($input['min_participants'] ?? null, FILTER_VALIDATE_INT);
+    if ($minParticipants === false || $minParticipants < 0 || $minParticipants > $maxParticipants) {
+        throw new InvalidArgumentException('Die minimale Teilnehmerzahl muss zwischen 0 und der maximalen Teilnehmerzahl liegen.');
     }
 
     $lastRegisterDate = trim($input['registration_deadline'] ?? '');
@@ -212,6 +233,7 @@ function validateData(array $input): array
         'city' => $city,
         'description' => $description,
         'max_participants' => $maxParticipants,
+        'min_participants' => $minParticipants,
         'registration_deadline' => $lastRegisterDate,
         'status' => $status
     ];
@@ -285,6 +307,7 @@ function createEvent(PDO $pdo, int $userId, array $data): int
                 city,
                 description,
                 max_participants,
+                min_participants,
                 registration_deadline,
                 status,
                 created_by,
@@ -299,6 +322,7 @@ function createEvent(PDO $pdo, int $userId, array $data): int
                 :city,
                 :description,
                 :max_participants,
+                :min_participants,
                 :registration_deadline,
                 :status,
                 :created_by,
@@ -316,6 +340,7 @@ function createEvent(PDO $pdo, int $userId, array $data): int
         'city' => $data['city'],
         'description' => $data['description'],
         'max_participants' => $data['max_participants'],
+        'min_participants' => $data['min_participants'],
         'registration_deadline' => $data['registration_deadline'],
         'status' => $data['status'] ?? 'planned',
         'created_by' => $userId,
@@ -339,6 +364,7 @@ function updateEvent(PDO $pdo, int $eventId, int $userId, array $data): bool
                 city = :city,
                 description = :description,
                 max_participants = :max_participants,
+                min_participants = :min_participants,
                 registration_deadline = :registration_deadline,
                 status = :status,
                 updated_by = :updated_by
@@ -357,6 +383,7 @@ function updateEvent(PDO $pdo, int $eventId, int $userId, array $data): bool
         'city' => $data['city'],
         'description' => $data['description'],
         'max_participants' => $data['max_participants'],
+        'min_participants' => $data['min_participants'],
         'registration_deadline' => $data['registration_deadline'],
         'status' => $data['status'],
         'updated_by' => $userId,

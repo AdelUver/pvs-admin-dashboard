@@ -29,7 +29,7 @@
 
                             </label>
 
-                            <input type="text" name="title" id="title" class="form-control" required>
+                            <input type="text" name="title" id="title" class="form-control" maxlength="255" required>
 
                         </div>
 
@@ -80,7 +80,7 @@
 
                         </label>
 
-                        <textarea name="description" id="description" rows="4" class="form-control"></textarea>
+                        <textarea name="description" id="description" rows="4" class="form-control" maxlength="255"></textarea>
 
                     </div>
 
@@ -122,7 +122,7 @@
 
                             </label>
 
-                            <input type="text" name="location" id="location" class="form-control" required>
+                            <input type="text" name="location" id="location" class="form-control" maxlength="255" required>
 
                         </div>
 
@@ -134,7 +134,7 @@
 
                             </label>
 
-                            <input type="text" name="street" id="street" class="form-control" required>
+                            <input type="text" name="street" id="street" class="form-control" maxlength="255" required>
 
                         </div>
 
@@ -146,7 +146,7 @@
 
                             </label>
 
-                            <input type="text" name="post_code" id="postCode" class="form-control" pattern="[0-9]{4,5}" required>
+                            <input type="text" name="post_code" id="postCode" class="form-control" pattern="[0-9]{4,5}" inputmode="numeric" required>
 
                         </div>
 
@@ -158,7 +158,7 @@
 
                             </label>
 
-                            <input type="text" name="city" id="city" class="form-control" required>
+                            <input type="text" name="city" id="city" class="form-control" maxlength="255" required>
 
                         </div>
 
@@ -171,7 +171,19 @@
 
                             </label>
 
-                            <input type="number" name="max_participants" id="max_participants" class="form-control" min="1" step="1" required>
+                            <input type="number" name="max_participants" id="max_participants" class="form-control" min="1" max="2147483647" step="1" required>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label for="min_participants" class="form-label">
+
+                                Min. Teilnehmer
+
+                            </label>
+
+                            <input type="number" name="min_participants" id="min_participants" class="form-control" min="0" max="2147483647" step="1" value="0" required>
 
                         </div>
 

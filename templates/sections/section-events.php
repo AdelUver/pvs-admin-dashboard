@@ -179,6 +179,8 @@ $events = getAllEvents($pdo);
 
                         <th scope="col">Max. Teilnehmer</th>
 
+                        <th scope="col">Min. Teilnehmer</th>
+
                         <th scope="col">Status</th>
 
                         <th class="text-center" scope="col">
@@ -194,7 +196,7 @@ $events = getAllEvents($pdo);
                 <tbody id="tableBody">
 
                     <tr id="eventEmptyState" <?= $events ? 'hidden' : '' ?>>
-                        <td colspan="8">Keine Events gefunden.</td>
+                        <td colspan="9">Keine Events gefunden.</td>
                     </tr>
 
                     <?php foreach ($events as $event): ?>
@@ -235,6 +237,12 @@ $events = getAllEvents($pdo);
                             <td>
 
                                 <?= (int) $event["max_participants"] ?>
+
+                            </td>
+
+                            <td>
+
+                                <?= (int) $event["min_participants"] ?>
 
                             </td>
 
@@ -467,6 +475,7 @@ $events = getAllEvents($pdo);
                     $("#show_postcode").text(event.post_code);
                     $("#show_city").text(event.city);
                     $("#show_max").text(event.max_participants);
+                    $("#show_min").text(event.min_participants);
                     $("#show_deadline").text(event.registration_deadline);
                     $("#show_status").text(statusLabels[event.status] || event.status);
 
@@ -504,6 +513,7 @@ $events = getAllEvents($pdo);
                     $("#postCode").val(event.post_code);
                     $("#city").val(event.city);
                     $("#max_participants").val(event.max_participants);
+                    $("#min_participants").val(event.min_participants);
                     $("#registration_deadline").val(event.registration_deadline);
 
                     eventForm.attr("data-event-id", event.event_id);

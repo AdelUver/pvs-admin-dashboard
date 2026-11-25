@@ -85,6 +85,11 @@
                             </tr>
 
                             <tr>
+                                <th scope="row">Min. Teilnehmer</th>
+                                <td id="show_min"></td>
+                            </tr>
+
+                            <tr>
                                 <th scope="row">Anmeldeschluss</th>
                                 <td id="show_deadline"></td>
                             </tr>
