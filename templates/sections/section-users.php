@@ -76,6 +76,8 @@ require_once FUNCTIONS_PATH . '/function-db.php';
 //Daten
 $pdo = getDB();
 $users = getAllUsers($pdo);
+$currentUserRole = getUserRole($pdo, (int) $_SESSION['userId']) ?? '';
+$canManageUsers = canManageUsers($currentUserRole);
 $roleLabels = [
     'super_admin' => 'Superadmin',
     'admin' => 'Admin',
@@ -98,11 +100,11 @@ $formatUserDate = static function ($value): string {
 
         <h1 class="page-title" id="usersTitle">
 
-            Benutzer
+            Admins
 
         </h1>
 
-        <?php if (isSuperAdmin($pdo, $_SESSION['userId'])): ?>
+        <?php if ($canManageUsers): ?>
 
             <button type="button" class="btn btn-primary" id="addUserbtn">
 
@@ -116,7 +118,7 @@ $formatUserDate = static function ($value): string {
 
     </header>
 
-    <form class="filter-box" id="userFilterForm" role="search" aria-label="Benutzer filtern">
+    <form class="filter-box" id="userFilterForm" role="search" aria-label="Admins filtern">
 
         <div class="user-filter-grid">
 
@@ -178,7 +180,7 @@ $formatUserDate = static function ($value): string {
 
         <div class="card-body">
 
-            <div class="table-responsive" role="region" aria-label="Benutzerliste" tabindex="0">
+            <div class="table-responsive" role="region" aria-label="Adminliste" tabindex="0">
                 <table class="table table-hover align-middle">
 
                     <thead>
@@ -215,7 +217,7 @@ $formatUserDate = static function ($value): string {
 
                         <?php if (!$users): ?>
                             <tr id="emptyUsersInitial">
-                                <td colspan="9">Keine Benutzer vorhanden.</td>
+                                <td colspan="9">Keine Admins vorhanden.</td>
                             </tr>
                         <?php else: ?>
                             <?php foreach ($users as $user): ?>
@@ -283,17 +285,19 @@ $formatUserDate = static function ($value): string {
 
                                         </button>
 
-                                        <button type="button" class="btn btn-outline-warning btn-sm action-btn updateUser"
-                                            data-id="<?= (int) $user['user_id'] ?>" title="Benutzer bearbeiten"
-                                            aria-label="Benutzer bearbeiten">
-                                            <i class="fa-solid fa-pen" aria-hidden="true"></i>
-                                        </button>
+                                        <?php if ($canManageUsers && canManageUserRole($currentUserRole, $user['role'])): ?>
+                                            <button type="button" class="btn btn-outline-warning btn-sm action-btn updateUser"
+                                                data-id="<?= (int) $user['user_id'] ?>" title="Benutzer bearbeiten"
+                                                aria-label="Benutzer bearbeiten">
+                                                <i class="fa-solid fa-pen" aria-hidden="true"></i>
+                                            </button>
 
-                                        <button type="button" class="btn btn-outline-danger btn-sm action-btn deleteUser"
-                                            data-id="<?= (int) $user['user_id'] ?>" title="Benutzer löschen"
-                                            aria-label="Benutzer löschen">
-                                            <i class="fa-solid fa-trash" aria-hidden="true"></i>
-                                        </button>
+                                            <button type="button" class="btn btn-outline-danger btn-sm action-btn deleteUser"
+                                                data-id="<?= (int) $user['user_id'] ?>" title="Benutzer löschen"
+                                                aria-label="Benutzer löschen">
+                                                <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        <?php endif; ?>
 
 
 
@@ -305,7 +309,7 @@ $formatUserDate = static function ($value): string {
                         <?php endif; ?>
 
                         <tr id="noUsersFound" hidden>
-                            <td colspan="9">Keine Benutzer gefunden.</td>
+                            <td colspan="9">Keine Admins gefunden.</td>
                         </tr>
                     </tbody>
 
@@ -421,7 +425,7 @@ $formatUserDate = static function ($value): string {
             const hasFilters = email !== "" || firstName !== "" || lastName !== "" || role !== "";
             $("#emptyUsersInitial").prop("hidden", hasFilters);
             $("#noUsersFound").prop("hidden", visibleCount > 0 || (!hasFilters && $("#tableBody tr[data-id]").length === 0));
-            $("#noUsersFound td").text(hasFilters ? "Keine Benutzer entsprechen den Filtern." : "Keine Benutzer vorhanden.");
+            $("#noUsersFound td").text(hasFilters ? "Keine Admins entsprechen den Filtern." : "Keine Admins vorhanden.");
         }
 
         $("#addUserbtn").on("click", function () {

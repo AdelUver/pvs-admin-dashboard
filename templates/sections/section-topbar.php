@@ -2,7 +2,7 @@
 $pageTitles = [
     'dashboard' => 'Dashboard',
     'events' => 'Events',
-    'users' => 'Benutzer',
+    'users' => 'Admins',
     'courses' => 'Kurse',
     'profile' => 'Profil',
     'settings' => 'Einstellungen'

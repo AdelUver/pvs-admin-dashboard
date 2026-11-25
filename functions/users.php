@@ -16,6 +16,50 @@ function validateUserData(array $data): array
     ];
 }
 
+
+
+function userFieldsFitSchema(array $data): bool
+{
+    $limits = [
+        'username' => 32,
+        'email' => 64,
+        'first_name' => 32,
+        'last_name' => 32
+    ];
+
+    foreach ($limits as $field => $limit) {
+        $characterCount = preg_match_all('/./us', $data[$field], $matches);
+        if ($characterCount === false || $characterCount > $limit) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function getUserRole(PDO $pdo, int $userId): ?string
+{
+    $stmt = $pdo->prepare(
+        "SELECT role FROM admin_users WHERE user_id = :id LIMIT 1"
+    );
+    $stmt->execute([':id' => $userId]);
+
+    $role = $stmt->fetchColumn();
+
+    return is_string($role) ? $role : null;
+}
+
+function canManageUsers(string $role): bool
+{
+    return in_array($role, ['super_admin', 'admin'], true);
+}
+
+function canManageUserRole(string $actorRole, string $targetRole): bool
+{
+    return $actorRole === 'super_admin'
+        || ($actorRole === 'admin' && in_array($targetRole, ['editor', 'user'], true));
+}
+
 function userUsernameExists(PDO $pdo, string $username, int $exceptUserId = 0): bool
 {
     $stmt = $pdo->prepare("
@@ -75,15 +119,7 @@ function getAllUsers(PDO $pdo): array
 
 function isSuperAdmin(PDO $pdo, int $userID): bool
 {
-    $stmt = $pdo->prepare(
-        "SELECT role FROM admin_users WHERE user_id = :id LIMIT 1"
-    );
-
-    $stmt->execute([':id' => $userID]);
-
-    $role = $stmt->fetchColumn();
-
-    return $role === 'super_admin';
+    return getUserRole($pdo, $userID) === 'super_admin';
 }
 
 //user anhand id lesen
@@ -125,6 +161,7 @@ function createUser(PDO $pdo, int $createdBy, array $data): int
             password_hash,
             role,
             is_active,
+            last_login_at,
             created_by,
             updated_by
         )
@@ -137,6 +174,7 @@ function createUser(PDO $pdo, int $createdBy, array $data): int
             :password_hash,
             :role,
             :is_active,
+            '0000-00-00 00:00:00',
             :created_by,
             :updated_by
         )

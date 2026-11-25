@@ -146,7 +146,7 @@
             <li>
                 <a class="sidebar__link" href="<?= BASE_URL ?>/users" <?= $currentRoute === 'users' ? 'aria-current="page"' : '' ?>>
                     <i class="fa-solid fa-users" aria-hidden="true"></i>
-                    <span>Benutzer</span>
+                    <span>Admins</span>
                 </a>
             </li>
             <li>

@@ -37,12 +37,37 @@ try {
 }
 
 $currentUserId = (int) $_SESSION['userId'];
+$currentUserRole = getUserRole($pdo, $currentUserId);
+if ($currentUserRole === null) {
+    http_response_code(403);
+    exit('Kein gültiges Benutzerkonto.');
+}
+
+$actions = [];
+if (isset($_POST['showUser'])) {
+    $actions[] = 'show';
+}
+if (isset($_POST['createUser'])) {
+    $actions[] = 'create';
+}
+if (isset($_POST['updateUser'])) {
+    $actions[] = isset($_POST['load']) ? 'load' : 'update';
+}
+if (isset($_POST['deleteUser'])) {
+    $actions[] = 'delete';
+}
+
+if (count($actions) !== 1) {
+    http_response_code(400);
+    echo 'Ungültige Anfrage.';
+    exit();
+}
+
+$action = $actions[0];
 $userId = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT);
-$isLoadRequest = isset($_POST['updateUser'], $_POST['load']);
 
-if (isset($_POST['showUser']) || $isLoadRequest) {
+if (in_array($action, ['show', 'load'], true)) {
     header('Content-Type: application/json; charset=utf-8');
-
     if ($userId === false || $userId === null || $userId < 1) {
         http_response_code(400);
         echo json_encode(['success' => false, 'message' => 'Ungültige Benutzer-ID.']);
@@ -68,23 +93,38 @@ if (isset($_POST['showUser']) || $isLoadRequest) {
     exit();
 }
 
-$isCreate = isset($_POST['createUser']);
-$isUpdate = isset($_POST['updateUser']) && !$isLoadRequest;
-$isDelete = isset($_POST['deleteUser']);
-
-if (!$isCreate && !$isUpdate && !$isDelete) {
-    http_response_code(400);
-    echo 'Ungültige Anfrage.';
-    exit();
+if (!canManageUsers($currentUserRole)) {
+    http_response_code(403);
+    exit('Du darfst Benutzer nur ansehen.');
 }
 
-if (!$isCreate && ($userId === false || $userId === null || $userId < 1)) {
+if ($action !== 'create' && ($userId === false || $userId === null || $userId < 1)) {
     http_response_code(400);
     echo 'Ungültige Benutzer-ID.';
     exit();
 }
 
-if ($isDelete) {
+if ($action !== 'create') {
+    try {
+        $targetUser = getUserById($pdo, $userId);
+    } catch (PDOException $exception) {
+        error_log($exception->getMessage());
+        http_response_code(500);
+        exit('Benutzerdaten konnten nicht geladen werden.');
+    }
+
+    if (!$targetUser) {
+        http_response_code(404);
+        exit('Benutzer nicht gefunden.');
+    }
+
+    if (!canManageUserRole($currentUserRole, $targetUser['role'])) {
+        http_response_code(403);
+        exit('Du darfst Benutzer mit dieser Rolle nicht bearbeiten.');
+    }
+}
+
+if ($action === 'delete') {
     try {
         if (deleteUser($pdo, $userId)) {
             echo 'success';
@@ -101,6 +141,13 @@ if ($isDelete) {
 }
 
 $data = validateUserData($_POST);
+$isUpdate = $action === 'update';
+
+if (!userFieldsFitSchema($data)) {
+    http_response_code(400);
+    echo 'Benutzername, E-Mail, Vor- und Nachname überschreiten die erlaubte Feldlänge.';
+    exit();
+}
 
 if ($data['username'] === '' || $data['first_name'] === '' || $data['last_name'] === '') {
     http_response_code(400);
@@ -120,13 +167,19 @@ if (!in_array($data['role'], ['super_admin', 'admin', 'editor', 'user'], true)) 
     exit();
 }
 
+if (!canManageUserRole($currentUserRole, $data['role'])) {
+    http_response_code(403);
+    echo 'Du darfst keine Benutzer mit dieser Rolle erstellen oder zuweisen.';
+    exit();
+}
+
 if (!in_array($data['is_active'], [0, 1], true)) {
     http_response_code(400);
     echo 'Ungültiger Benutzerstatus.';
     exit();
 }
 
-if (($isCreate && strlen($data['password']) < 3)
+if (($action === 'create' && strlen($data['password']) < 3)
     || ($isUpdate && $data['password'] !== '' && strlen($data['password']) < 3)) {
     http_response_code(400);
     echo 'Das Passwort muss mindestens 3 Zeichen lang sein.';
@@ -147,13 +200,13 @@ try {
         exit();
     }
 
-    $saved = $isCreate
+    $saved = !$isUpdate
         ? createUser($pdo, $currentUserId, $data) > 0
         : updateUser($pdo, $userId, $currentUserId, $data);
 } catch (PDOException $exception) {
     error_log($exception->getMessage());
     http_response_code(500);
-    echo $isCreate ? 'Benutzer konnte nicht erstellt werden.' : 'Benutzer konnte nicht aktualisiert werden.';
+    echo $isUpdate ? 'Benutzer konnte nicht aktualisiert werden.' : 'Benutzer konnte nicht erstellt werden.';
     exit();
 }
 

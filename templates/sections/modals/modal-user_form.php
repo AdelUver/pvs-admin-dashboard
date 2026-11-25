@@ -22,22 +22,22 @@
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label" for="first_name">Vorname</label>
-                            <input type="text" class="form-control" id="first_name" name="first_name" required>
+                            <input type="text" class="form-control" id="first_name" name="first_name" maxlength="32" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label" for="last_name">Nachname</label>
-                            <input type="text" class="form-control" id="last_name" name="last_name" required>
+                            <input type="text" class="form-control" id="last_name" name="last_name" maxlength="32" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label" for="username">Benutzername</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
+                            <input type="text" class="form-control" id="username" name="username" maxlength="32" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label" for="email">E-Mail</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
+                            <input type="email" class="form-control" id="email" name="email" maxlength="64" required>
                         </div>
 
                         <div class="col-md-6 mb-3">
@@ -53,8 +53,10 @@
 
                             <select class="form-select" id="role" name="role">
 
-                                <option value="super_admin">Superadmin</option>
-                                <option value="admin">Admin</option>
+                                <?php if ($currentUserRole === 'super_admin'): ?>
+                                    <option value="super_admin">Superadmin</option>
+                                    <option value="admin">Admin</option>
+                                <?php endif; ?>
                                 <option value="editor">Editor</option>
                                 <option value="user">User</option>
 
