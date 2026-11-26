@@ -65,6 +65,29 @@
         margin-bottom: 20px;
 
     }
+
+    .dashboard-ui .user-filter-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        align-items: end;
+        gap: 1rem;
+    }
+
+    .dashboard-ui .user-filter-grid .form-label {
+        display: block;
+    }
+
+    @media (min-width: 576px) {
+        .dashboard-ui .user-filter-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (min-width: 992px) {
+        .dashboard-ui .user-filter-grid {
+            grid-template-columns: minmax(0, 1.3fr) repeat(2, minmax(0, 1fr)) minmax(130px, .8fr) minmax(100px, .7fr);
+        }
+    }
 </style>
 
 <?php

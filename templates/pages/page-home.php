@@ -14,75 +14,16 @@ $currentRoute = in_array($requestedRoute, $sectionRoutes, true) ? $requestedRout
 ?>
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
-    <?php $includeAppStyles = true; ?>
     <?php include_once SECTIONS_PATH . '/section-head.php'; ?>
-<style>
-    .dashboard-ui {
-        min-height: 100vh;
-        margin: 0;
-        background: #f4f6fb;
-        color: #1f2937;
-        font-family: var(--pvs-font-main);
-    }
-
-    .dashboard-ui .main-content {
-        min-height: 100vh;
-        margin-left: 260px;
-        transition: margin-left .25s ease;
-    }
-
-    .dashboard-ui .main-content.expanded {
-        margin-left: 80px;
-    }
-
-    .dashboard-ui .content {
-        width: min(100%, 1600px);
-        margin: 0 auto;
-        padding: clamp(1rem, 2.5vw, 2rem);
-    }
-
-    .dashboard-ui .sidebar-backdrop {
-        display: none;
-    }
-
-    @media (max-width: 991px) {
-        .dashboard-ui .content {
-            padding: 1.25rem;
-        }
-    }
-
-    @media (max-width: 767px) {
-        .dashboard-ui .main-content,
-        .dashboard-ui .main-content.expanded {
-            margin-left: 0;
-        }
-
-        .dashboard-ui .content {
-            padding: 1rem;
-        }
-
-        .dashboard-ui .sidebar-backdrop:not([hidden]) {
-            position: fixed;
-            z-index: 19;
-            inset: 0;
-            display: block;
-            width: 100%;
-            height: 100%;
-            border: 0;
-            background: rgba(0, 0, 0, .55);
-        }
-
-        .dashboard-ui.sidebar-open {
-            overflow: hidden;
-        }
-    }
-</style>
+    
 </head>
 
 <body class="dashboard-ui">
     <?php include SECTIONS_PATH . '/section-sidebar.php'; ?>
-    <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Navigation schließen" hidden></button>
+    <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="Navigation schließen"
+        hidden></button>
 
     <div class="main-content" id="mainContent">
         <?php include SECTIONS_PATH . '/section-topbar.php'; ?>
@@ -171,4 +112,5 @@ $currentRoute = in_array($requestedRoute, $sectionRoutes, true) ? $requestedRout
         }());
     </script>
 </body>
+
 </html>

@@ -64,6 +64,14 @@ if (!is_string($lastLogin) || $lastLogin === '' || strncmp($lastLogin, '0000-00-
         padding: 8px 15px;
 
     }
+
+    .dashboard-ui .table.profile-info-table {
+        min-width: 0;
+    }
+
+    .dashboard-ui .profile-card__title {
+        margin: 0;
+    }
 </style>
 
 

@@ -20,38 +20,42 @@ $upcomingEvents = getUpcomingEvents($pdo);
 
 ?>
 
-
-
 <style>
-    .dashboard-card {
-        background: #fff;
-        border-left: 5px solid;
-        border-radius: 12px;
-        padding: 25px;
+    .dashboard-ui .dashboard-card {
         display: flex;
+        height: 100%;
         align-items: center;
         gap: 20px;
-        height: 100%;
+        padding: 25px;
+        border-left: 5px solid;
+        border-radius: 12px;
+        background: #fff;
         box-shadow: 0 .15rem .75rem rgba(0, 0, 0, .08);
         transition: all .25s ease;
     }
 
-    .dashboard-card:hover {
+    .dashboard-ui .dashboard-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 .5rem 1.25rem rgba(0, 0, 0, .15);
     }
 
-    .dashboard-icon {
+    .dashboard-ui .dashboard-icon {
         width: 70px;
         text-align: center;
         font-size: 3rem;
     }
 
-    .dashboard-content {
+    .dashboard-ui .dashboard-content {
+        min-width: 0;
         flex: 1;
+        overflow-wrap: anywhere;
     }
 
-    .dashboard-content h3 {
+    .dashboard-ui .dashboard-content p {
+        overflow-wrap: anywhere;
+    }
+
+    .dashboard-ui .dashboard-content h3 {
         margin: 0;
         color: #6c757d;
         font-size: .9rem;
@@ -60,33 +64,20 @@ $upcomingEvents = getUpcomingEvents($pdo);
         letter-spacing: .5px;
     }
 
-    .dashboard-content .dashboard-value {
+    .dashboard-ui .dashboard-content .dashboard-value {
         margin-top: 8px;
         margin-bottom: 0;
+        color: var(--pvs-text-dark);
         font-size: 2.2rem;
         font-weight: 700;
-        color: #212529;
     }
 
-    @media (max-width:768px) {
-
-        .dashboard-card {
-            padding: 20px;
-        }
-
-        .dashboard-icon {
-            font-size: 2.4rem;
-            width: 60px;
-        }
-
-        .dashboard-content .dashboard-value {
-            font-size: 1.8rem;
-        }
-
+    @media (max-width: 767px) {
+        .dashboard-ui .dashboard-card { padding: 20px; }
+        .dashboard-ui .dashboard-icon { width: 60px; font-size: 2.4rem; }
+        .dashboard-ui .dashboard-content .dashboard-value { font-size: 1.8rem; }
     }
 </style>
-
-
 
 <header class="section-heading">
     <h1 class="page-title">Dashboard</h1>
